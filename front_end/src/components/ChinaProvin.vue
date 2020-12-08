@@ -1,14 +1,7 @@
-<template>
-  <div>谣言</div>
-</template>
+<template> </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
-  mounted() {},
-  methods: {},
   props: {},
 };
 </script>

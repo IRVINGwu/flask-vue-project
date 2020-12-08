@@ -65,7 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  background-color: rgba(25, 169, 252, 0.5);
+  background-color: rgba(238, 240, 241, 0.5);
   height: 30px;
   display: flex;
   align-items: center;
@@ -73,14 +73,14 @@ export default {
     color: #1989fa;
     flex: 3;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
   }
   span:last-child {
-    color: rgba(36, 35, 35, 0.938);
+    color: rgba(13, 47, 195, 0.938);
     flex: 8;
-    font-size: 18px;
-    font-weight: bold;
-    padding-left: 45px;
+    font-size: 15px;
+    font-weight: 100;
+    padding-left: 52px;
   }
 }
 
