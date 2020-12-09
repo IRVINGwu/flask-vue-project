@@ -5,6 +5,8 @@ import store from "./store";
 import echarts from "./assets/js/echarts.min.js";
 // import "echarts/map/js/china.js";
 import axios from "axios";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;

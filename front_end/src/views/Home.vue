@@ -52,6 +52,50 @@
         <ChinaMap></ChinaMap>
         <h3>中国疫情趋势图</h3>
         <ChinaLine></ChinaLine>
+        <h3>中国疫情详情</h3>
+        <ChinaTable></ChinaTable>
+        <p>数据来源：WHO及权威媒体</p>
+      </div>
+
+      <!-- 疫情注意事项 -->
+      <div class="cautions">
+        <div class="card bg-light mb-3">
+          <div class="card-header">新冠肺炎预防须知</div>
+          <div class="card-body">
+            <h5 class="title1">
+              个人清洁
+            </h5>
+            <ul>
+              <li>
+                保持个人卫生首先就要勤洗手，将病毒彻底洗干净，保持双手清洁，尤其在触摸口、鼻、眼之前。
+              </li>
+              <li>经常用洗手液和肥皂清洗双手，搓手最少20秒，并用纸巾擦干。</li>
+              <li>
+                打喷嚏或咳嗽时应用纸巾掩盖口鼻，把用过的纸巾弃置于有盖的垃圾桶内，然后彻底清洁双手。
+              </li>
+            </ul>
+            <h5 class="title2">尽量避免</h5>
+            <ul>
+              <li>减少前往人流密集场所，如不可避免，应戴上外科口罩。</li>
+              <li>
+                避免到访医院，如有必要到访医院，应佩戴外科口罩，时刻注意个人和手部卫生。
+              </li>
+              <li>
+                避免接触动物（包括野味）、禽鸟或其粪便；避免到海鲜、活禽市场。
+              </li>
+              <li>切勿进食野味及光顾有提供野味的餐馆。</li>
+              <li>
+                注意食物安全和卫生，避免进食或饮用未熟透的动物食品，包括奶类、蛋类和肉类。
+              </li>
+            </ul>
+            <h5 class="title3">尽快就诊</h5>
+            <ul>
+              <li>
+                如有身体不适，特别是有发热或咳嗽，应尽快就诊。
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -61,6 +105,7 @@
 import { Grid, GridItem } from "vant";
 import ChinaMap from "../components/ChinaDataMap.vue";
 import ChinaLine from "../components/ChinaDataLine.vue";
+import ChinaTable from "../components/ChinaDataTable.vue";
 
 export default {
   data() {
@@ -71,6 +116,7 @@ export default {
     [GridItem.name]: GridItem,
     ChinaMap,
     ChinaLine,
+    ChinaTable,
   },
 };
 </script>
@@ -81,6 +127,8 @@ h3 {
   padding: 0;
 }
 .homeContainer {
+  margin-top: 46px;
+  margin-bottom: 35px;
   .home_header {
     position: relative;
     img {
@@ -95,7 +143,7 @@ h3 {
       top: 30px;
       display: flex;
       flex-direction: column;
-      font-size: 22px;
+      font-size: 24px;
       color: white;
       text-align: center;
       :nth-child(3) {
@@ -193,9 +241,85 @@ h3 {
       h3 {
         font-size: 20px;
         color: #020202;
-        margin: 5px 0;
+        margin: 10px 0;
         border-left: 5px solid red;
         padding-left: 5px;
+      }
+      p {
+        font-size: 14px;
+        color: rgba(22, 22, 22, 0.5);
+        padding-left: 5px;
+      }
+    }
+  }
+
+  // 注意事项
+  .cautions {
+    width: 100%;
+    .card {
+      width: 100%;
+    }
+    .card-header {
+      text-align: center;
+      padding: 5px 0;
+      color: #020202;
+      font-size: 18px;
+    }
+    .card-body {
+      color: rgb(75, 78, 75);
+      padding: 15px 2px 0px 15px;
+      background-color: rgb(248, 248, 248);
+      h5 {
+        font-size: 16px;
+        vertical-align: middle;
+      }
+      .title1:before {
+        content: "";
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: url(../assets/images/zhuyi_icon.png) no-repeat;
+        background-position: 50% 35%;
+        background-size: 60% 60%;
+        margin-right: 7px;
+        vertical-align: middle;
+      }
+      .title2:before {
+        content: "";
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: url(../assets/images/jinzhi_icon.png) no-repeat;
+        background-position: 50% 35%;
+        background-size: 60% 60%;
+        margin-right: 7px;
+        vertical-align: middle;
+      }
+      .title3:before {
+        content: "";
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: url(../assets/images/jiuzhen_icon.png) no-repeat;
+        background-position: 50% 35%;
+        background-size: 60% 60%;
+        margin-right: 7px;
+        vertical-align: middle;
+      }
+      ul {
+        list-style-type: none;
+        font-size: 14px;
+        // margin-left: 0.1em;
+        li:before {
+          content: "";
+          width: 6px;
+          height: 6px;
+          display: inline-block;
+          border-radius: 50%;
+          background: rgb(0, 93, 255);
+          vertical-align: middle;
+          margin-right: 7px;
+        }
       }
     }
   }

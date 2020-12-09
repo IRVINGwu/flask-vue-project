@@ -9,8 +9,11 @@
   "dependencies": {
     "axios": "^0.21.0",
     "babel-plugin-import": "^1.13.3",
+    "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
     "echarts": "^5.0.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1",
     "vant": "^2.11.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

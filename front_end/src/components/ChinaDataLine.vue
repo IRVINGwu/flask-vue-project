@@ -1,14 +1,21 @@
 <template>
   <div class="china_line_container">
-    <van-tabs type="card" animated @click="onClick">
-      <van-tab title="新增趋势"
-        ><div id="chartline1" style="width:100%; height:400px;"></div
+    <van-tabs type="card" animated @click="onClick" id="tabs">
+      <van-tab
+        title="新增趋势"
+        id="chartline1"
+        style="width:100%; height:400px;"
       ></van-tab>
-      <van-tab title="确诊趋势">
-        <div id="chartline2" style="width:100%; height:400px;"></div
-      ></van-tab>
-      <van-tab title="治疗趋势"
-        ><div id="chartline3" style="width:100%; height:400px;"></div
+      <van-tab
+        title="确诊趋势"
+        id="chartline2"
+        style="width:100%; height:400px;"
+      >
+      </van-tab>
+      <van-tab
+        title="治疗趋势"
+        id="chartline3"
+        style="width:100%; height:400px;"
       ></van-tab>
     </van-tabs>
   </div>
@@ -45,21 +52,29 @@ export default {
       },
     };
   },
-  created() {},
-  mounted() {
-    this.$nextTick(function() {
-      this.drawLine1();
-    });
+  created() {
+    // this.$nextTick(() => {
+    //   this.drawLine1();
+    //   this.drawLine2();
+    //   this.drawLine3();
+    // });
   },
   methods: {
-    // TODO:tab切换的问题需要解决，如果实在解决不了，就依序排列下来即可。
     onClick(name, title) {
+      let chartline1 = echarts.init(document.getElementById("chartline1"));
+      let chartline2 = echarts.init(document.getElementById("chartline2"));
+      let chartline3 = echarts.init(document.getElementById("chartline3"));
       if (title == "确诊趋势") {
-        this.drawLine2();
+        // console.log(chartline2);
+        // console.log("确诊趋势");
+        chartline2.setOption(this.optionline);
       } else if (title == "治疗趋势") {
-        this.drawLine3();
+        // console.log("治疗趋势");
+        // console.log(chartline3);
+        chartline3.setOption(this.optionline);
       } else {
-        this.drawLine1();
+        //绘制图表
+        chartline1.setOption(this.optionline);
       }
     },
     drawLine1() {
@@ -67,29 +82,24 @@ export default {
       let chartline1 = echarts.init(document.getElementById("chartline1"));
       //绘制图表
       chartline1.setOption(this.optionline);
-      // let chartline2 = echarts.init(document.getElementById("chartline2"));
-      // //绘制图表
-      // chartline2.setOption(this.optionline);
-      // let chartline3 = echarts.init(document.getElementById("chartline3"));
-      // //绘制图表
-      // chartline3.setOption(this.optionline);
     },
     drawLine2() {
-      document.getElementById("chartline2").style.display = "block";
       //基于准本好的DOM，初始化echarts实例
-      let chartline2 = echarts.init(document.getElementById("chartline2"));
+      let line2 = document.getElementById("chartline2");
+      if (!line2) {
+        return false;
+      }
+      let chartline2 = echarts.init(line2);
+      // let chartline2 = echarts.init(this.$refs.line2);
       //绘制图表
       this.$nextTick(() => {
         chartline2.setOption(this.optionline);
       });
+      // chartline2.resize();
     },
     drawLine3() {
-      // let line3 = document.getElementById("chartline3");
-      // line3.style.display = "block";
-      // line3.style.width = "100%";
-      // line3.style.height = "400px";
-      //基于准本好的DOM，初始化echarts实例
-      let chartline3 = echarts.init(document.getElementById("chartline3"));
+      let line3 = document.getElementById("chartline3");
+      let chartline3 = echarts.init(line3);
       //绘制图表
       chartline3.setOption(this.optionline);
     },
@@ -248,6 +258,12 @@ export default {
     // },
   },
   props: {},
+  mounted() {
+    this.$nextTick(() => {
+      this.onClick();
+    });
+  },
+  destroyed() {},
   components: {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,

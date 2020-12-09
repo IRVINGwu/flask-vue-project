@@ -1,19 +1,5 @@
-# front_end
+## echarts中国地图是怎么解决的？
 
-## Project setup
-```
-npm install
-```
+## echarts切换不显示是怎么解决的？
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+将id直接放在vant的元素上面，获取到图表。这就解决了获取不到元素的问题。
