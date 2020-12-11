@@ -26,53 +26,54 @@
 
 <script>
 import echarts from "../assets/js/echarts.min.js";
-import axios from "axios";
+
 import { Button } from "vant";
 
 export default {
   data() {
     return {
       mapShow: true,
-      optionline: {
-        title: {
-          text: "ECharts 数据统计",
-        },
-        tooltip: {},
-        legend: {
-          data: ["用户来源"],
-        },
-        xAxis: {
-          data: ["Android", "IOS", "PC", "Ohter"],
-        },
-        yAxis: {},
-        series: [
-          {
-            name: "访问量",
-            type: "line", //设置图表主题
-            data: [500, 200, 360, 100],
-          },
-        ],
-      },
-      optionbar: {
-        title: {
-          text: "ECharts 数据统计",
-        },
-        tooltip: {},
-        legend: {
-          data: ["用户来源"],
-        },
-        xAxis: {
-          data: ["Android", "IOS", "PC", "Ohter"],
-        },
-        yAxis: {},
-        series: [
-          {
-            name: "访问量",
-            type: "bar", //设置图表主题
-            data: [500, 200, 360, 100],
-          },
-        ],
-      },
+      option_map:'',
+      // optionline: {
+      //   title: {
+      //     text: "ECharts 数据统计",
+      //   },
+      //   tooltip: {},
+      //   legend: {
+      //     data: ["用户来源"],
+      //   },
+      //   xAxis: {
+      //     data: ["Android", "IOS", "PC", "Ohter"],
+      //   },
+      //   yAxis: {},
+      //   series: [
+      //     {
+      //       name: "访问量",
+      //       type: "line", //设置图表主题
+      //       data: [500, 200, 360, 100],
+      //     },
+      //   ],
+      // },
+      // optionbar: {
+      //   title: {
+      //     text: "ECharts 数据统计",
+      //   },
+      //   tooltip: {},
+      //   legend: {
+      //     data: ["用户来源"],
+      //   },
+      //   xAxis: {
+      //     data: ["Android", "IOS", "PC", "Ohter"],
+      //   },
+      //   yAxis: {},
+      //   series: [
+      //     {
+      //       name: "访问量",
+      //       type: "bar", //设置图表主题
+      //       data: [500, 200, 360, 100],
+      //     },
+      //   ],
+      // },
     };
   },
   mounted() {
@@ -94,7 +95,9 @@ export default {
     },
     //创造热力图
     async creatDailyChart() {
-      const ret = await axios.get("china.json");
+      // const ret = await axios.get("/mapJson/china");
+      const ret = await this.$http.get("/china.json");
+      console.log(ret)
       echarts.registerMap("china", ret.data);
       let dataMap = [
         //热力图的数据

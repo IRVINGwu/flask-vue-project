@@ -9,6 +9,11 @@ class CleanData:
         pass
     # 从原始文件中提取出中国和世界的数据，并转置，让日期称为index，保存为文件
 
+    '''
+    因为文件要在app.py里面引用，所以读取文件的位置要改成相对于app.py的位置，之前在本文件内调试都是../static开头，没有问题。
+    但是要想在app.py里面正常使用，必须改成./static开头，这一点要明确。
+    '''
+
     def getNum(self):
         urls = [
             'time_series_covid19_confirmed_global.csv',

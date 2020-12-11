@@ -6,6 +6,10 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from datetime import date, timedelta
 
+'''
+因为文件要在app.py里面引用，所以读取文件的位置要改成相对于app.py的位置，之前在本文件内调试都是../static开头，没有问题。
+但是要想在app.py里面正常使用，必须改成./static开头，这一点要明确。
+'''
 
 # 获取国家的数据
 def get_data(n):

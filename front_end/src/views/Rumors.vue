@@ -22,36 +22,44 @@
       </div>
 
       <!--      谣言版块-->
-      <!--      TODO:准备好疫情新闻和谣言的json文件，然后使用v-for来渲染，这样才能充分发挥vue的威力-->
-      <div class="card bg-light mb-3">
-        <div class="card-header">年轻人和儿童感染几率非常小<span class="icon1">谣言</span></div>
+      <div class="card bg-light mb-3" v-for="(item,index) in result" :key="item.id">
+        <div class="card-header">{{ item.title }}<span class="icon1">谣言</span></div>
         <div class="card-body">
           <h5 class="title">
             鉴定：<span class="icon2">假</span><span class="icon3">谣言</span>
           </h5>
-          <h5 class="title">真相：<span class="icon4">没有感染的人都可能会感染</span></h5>
+          <h5 class="title">真相：<span class="icon4">{{ item.truth }}</span></h5>
           <h5 class="title">查据要点：</h5>
-          <p>
-            有专家提到，年轻人和儿童不易感染新型冠状病毒，但不易感染≠不会感染。<br>
-            就目前的流行病学而言，儿童、年轻人对病毒不易感，但这并不意味着大家可以掉以轻心。<br>
-            新型冠状病毒已经确定可以人传人，它的传播途径以呼吸道传播为主，像咳嗽、打喷嚏等均会传播病毒，在人流聚集的地方，一旦预防不到位，没有感染的人都可能会感染。
-            国家卫健委高级别专家组成员李兰娟也指出：“没有感染过这个疾病的人，都是易感的。”<br>
-            无论男女老少，都要重视预防，尤其是老年人、孕妇、婴幼儿等免疫功能较差的群体，一旦感染，病情发展往往更快，更要注意保护自己。<br>
+          <p v-html="item.content">
+
           </p>
-          <h5 class="title">查证来源：<span class="icon4">央视新闻</span></h5>
+          <h5 class="title">查证来源：<span class="icon4">{{ item.sounce }}</span></h5>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+
 export default {
   data () {
-    return {}
+    return {
+      result:''
+    }
   },
   mounted () {
+    this.getRumors()
   },
-  methods: {},
+  methods: {
+    async getRumors(){
+      const body = await this.$http.get("/rumors")
+      if(body.status == 200){
+        this.result = body.data
+      }
+      console.log(this.result)
+      // console.log(body)
+    }
+  },
   props: {},
 }
 </script>

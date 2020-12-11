@@ -4,7 +4,7 @@
 
 我在网上搜索，查看别人是怎样将图片存到数据库中，结果和我想的方法一样：
 
-![image-20201210225332008](E:\前端学习\flask-vue-project\back_end\images\problems.assets\image-20201210225332008.png)
+![image-20201210225332008](https://i.loli.net/2020/12/11/jlfthU9bIPOzALF.png)
 
 我就把图片路径存到json文件中即可，反正这个app也没有交互的功能，简单点，先做出来。
 
@@ -12,7 +12,7 @@
 
 在我的码云里面，一个叫“covid-19-data”的项目，里面存放着数据，每天从GitHub拉取更新即可得到最新的数据，但是这数据有点不一样，里面有更具体的国家、省份，还有感染数、康复数，等等。我主要看三个文件：
 
-![image-20201201135433455](E:\前端学习\flask-vue-project\back_end\images\problems.assets\image-20201201135433455.png)
+![image-20201201135433455](https://i.loli.net/2020/12/11/m7xsqYwfnuC6bXz.png)
 
 这三份文件做出世界的感染数、死亡数、康复数即可，还是分为三张表放着。
 
@@ -20,10 +20,81 @@
 
 ### 3.数据分类
 
-![image-20201203150056949](E:\前端学习\flask-vue-project\back_end\images\problems.assets\image-20201203150056949.png)
+![image-20201203150056949](https://i.loli.net/2020/12/11/K4oQgt1un9fXMFq.png)
 
 ### 4.路由问题
 
 flask中定义的每一个路由，对应的就是前端的一个组件，而这个组件是全局组件还是私有组件，就看你怎么组装了。
 
-flask中的各个路由，就想前端传递不同的数据。
+```python
+from flask import Flask
+from flask_cors import CORS
+from toolspkg.response import Response
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+
+# 可以热更新
+DEBUG = True
+
+# 开通 CORS
+CORS(app, resources={r'/*': {'origins': '*'}})
+
+
+@app.route('/', methods=['GET', 'POST'])
+def hello_world():
+    return 'Hello World!'
+
+# 传送谣言数据到前端
+
+
+@app.route('/rumors', methods=['GET'])
+def get_rumors():
+    response = Response().getRumors()
+    return response
+
+# 传送新闻数据到前端
+
+
+@app.route('/news', methods=['GET'])
+def get_news():
+    response = Response().getNews()
+    return response
+
+
+# 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
+if __name__ == '__main__':
+    app.run()
+```
+
+因为我启用了`flask_cors`，这样我就可以以`http://127.0.0.1:5000/rumors`这种方式向前端发送数据，前端的axios只需要访问这个地址即可获取数据。下面是用postman模拟获取数据的情况：
+
+![image-20201211190854185](https://i.loli.net/2020/12/11/mH74jvJTR8N1FD2.png)
+
+达到了我想要的效果。
+
+flask中的各个路由，就想前端传递不同的数据。需要几个数据接口就写几个数据接口，在细分的item路由上，可以传递参数。
+
+```python
+@app.route('/news/<numbers>', methods=['GET'])#numbers就是前端传递过来的参数，这个参数就是路由上的参数
+def get_news():
+    number = int(numbers)#这里是假设numbers只有一个数据
+    ...
+    调用后端的函数方法来对这个参数进行处理，得到我想要的数据
+    ...
+    return response
+```
+
+
+
+### 5.json数据问题
+
+使用`df.to_json`时，有三种参数，`split/records/table/index`，现在看起来只有`index`做的比较好，因为列标和内容都是以键值对的形式来传送的。
+
+![image-20201211185519866](https://i.loli.net/2020/12/11/datNnIcQ8FisH4Y.png)
+
+全部改为`index`即可。
+
+**为什么不把源文件就改为json格式呢？**
+
+如果改成json格式的话，确实比较好传送数据，但是在后端不好处理数据，我要先读取json文件，然后转换为dataframe类型，才能很好的处理数据。

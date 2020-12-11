@@ -1,5 +1,6 @@
 <template>
   <div class="app_container">
+
     <!-- header区域 -->
     <van-nav-bar
         title="疫情动态"
@@ -8,6 +9,7 @@
         @click-left="goBack"
         fixed
     />
+
     <!-- tabbar区域 -->
     <div class="tabbar">
       <van-tabbar v-model="active">
