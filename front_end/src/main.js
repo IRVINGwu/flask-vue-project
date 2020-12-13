@@ -12,7 +12,7 @@ Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
 
 // 设置基准路由地址
-axios.defaults.baseURL = "http://127.0.0.1:5000";
+axios.defaults.baseURL = "http://192.168.0.106:5000";
 // axios.defaults.headers["Content-Type"] = "application/x-www-form-urlencoded";
 Vue.prototype.$http = axios;
 // 这是在之前的项目中配置axios的方法，都看一下

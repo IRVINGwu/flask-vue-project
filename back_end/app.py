@@ -60,6 +60,8 @@ def get_chinaProvinceDaily():
 
 # TODO:这里做每个国家的详情数据
 # 发送各个国家详情数据，用于展示每个国家的具体情况
+
+
 @app.route('/worldDailyData/<country>', methods=['GET'])
 def get_worldDailyData(country):
     response = Response().getWorldSingleData(country)
@@ -83,12 +85,14 @@ def get_worldSum():
 
 # 发送中国当天数据到前端，用于展示地图
 
+
 @app.route('/chinaDaily', methods=['GET'])
 def get_chinaDaily():
     response = Response().getChinaDaiy()
     return response
 
 # 发送中国当天数据到前端，用于展示按日期排列的线形图
+
 
 @app.route('/chinaSum', methods=['GET'])
 def get_chinaSum():
@@ -98,12 +102,14 @@ def get_chinaSum():
 # TODO:这个路由做省份的数据
 # 发送中国当天数据到前端，用于展示线形图
 
+
 @app.route('/chinaProvince/<name>', methods=['Get'])
 def get_chinaProvince(name):
     response = Response().getChinaProvinceData(name)
     return response
 
 # 发送中国省份的城市当天数据到前端，用于展示地图和table表格
+
 
 @app.route('/chinaProvinCity/<name>', methods=['Get'])
 def get_chinaCity(name):
@@ -113,4 +119,8 @@ def get_chinaCity(name):
 
 # 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
 if __name__ == '__main__':
-    app.run()
+    app.run(
+        host='192.168.0.106',
+        port=5000,
+        debug=True
+    )

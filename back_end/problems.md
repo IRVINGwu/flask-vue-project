@@ -89,7 +89,7 @@ def get_news():
 
 ### 5.json数据问题
 
-使用`df.to_json`时，有三种参数，`split/records/table/index`，现在看起来只有`index`做的比较好，因为列标和内容都是以键值对的形式来传送的。
+使用`df.to_json`时，有三种参数，`split/records/table/index`，现在看起来只有`index`做的比较好（当然具体情况具体分析，主要看源数据的格式），因为列标和内容都是以键值对的形式来传送的。
 
 ![image-20201211185519866](https://i.loli.net/2020/12/11/datNnIcQ8FisH4Y.png)
 
@@ -98,3 +98,28 @@ def get_news():
 **为什么不把源文件就改为json格式呢？**
 
 如果改成json格式的话，确实比较好传送数据，但是在后端不好处理数据，我要先读取json文件，然后转换为dataframe类型，才能很好的处理数据。
+
+### 6.后端数据只能在电脑上访问，在手机上调试不行
+
+这是解决方法：https://blog.csdn.net/y_k_y/article/details/83043543?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control
+
+原因在于pycharm里面的设置：
+
+![image-20201213205511391](https://i.loli.net/2020/12/13/UoaZlOK4rAbwi16.png)
+
+![image-20201213210955644](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201213210955644.png)
+
+当然，为了保险起见，还需要在`app.py`里面将地址改掉：
+
+```python
+if __name__ == '__main__':
+    app.run(
+        host='192.168.0.106',#这是在cmd中使用ipconfig得到的ipv4的路由地址，可以在同一个网中访问
+        port=80,
+        debug=True
+    )
+```
+
+还要将前端里面`axios.baseURL`由`127.0.0.1:5000`改为这个地址`192.168.0.106:5000`，这样项目就可以在手机上进行调试了。
+
+**当然，上线之后要改掉，就改成127.0.0.1，要让别人自己的ipv4来用，免得暴露自己的地址。**

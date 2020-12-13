@@ -18,7 +18,7 @@
         <td>{{item.total.confirm }}</td>
         <td>{{item.total.heal}}</td>
         <td>{{item.total.dead}}</td>
-        <router-link :to="'/world/' + item.name" tag="td">详情&gt;</router-link>
+        <router-link :to="'/world/' + item.name" tag="td">more</router-link>
       </tr>
       </tbody>
     </table>
@@ -59,14 +59,15 @@ export default {
       tr {
         th {
           border: 0;
-          font-size: 15px;
+          font-size: 0.5rem;
           padding: 15px 5px;
           text-align: center;
         }
         th:nth-child(1) {
           background-color: rgb(245, 245, 245);
           color: rgb(34, 34, 34);
-          font-size: 14px;
+          text-align: left;
+          padding-left: 0.8rem;
         }
         th:nth-child(2) {
           background-color: rgb(252, 242, 232);
@@ -92,18 +93,20 @@ export default {
     }
     tbody {
       tr {
-        font-size: 16px;
+        font-size: 0.5rem;
         text-align: center;
         td {
           border: 0;
           border-bottom: 1px solid #dee2e6;
         }
         td:nth-child(1){
-          font-size: 14px;
+          font-size: 0.5rem;
+          text-align: left;
         }
         td:nth-child(6){
-          font-size: 14px;
+          font-size: 0.4rem;
           color: red;
+          text-align: left;
         }
       }
     }

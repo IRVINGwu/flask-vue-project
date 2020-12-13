@@ -59,7 +59,7 @@ export default {
       tr {
         th {
           border: 0;
-          font-size: 16px;
+          font-size: 0.625rem;
           padding: 15px 5px;
           text-align: center;
         }
@@ -91,7 +91,7 @@ export default {
     }
     tbody {
       tr {
-        font-size: 18px;
+        font-size: 0.875rem;
         text-align: center;
         td {
           border: 0;
@@ -99,7 +99,7 @@ export default {
         }
         td:nth-child(6){
           color: red;
-          font-size: 16px;
+          font-size: 0.65rem;
         }
       }
     }
