@@ -20,8 +20,8 @@
               <h4 class="title">{{ item.title }}</h4>
               <div class="content">{{ item.content.slice(3,29) }}...
               </div>
-<!--              TODO:这里要设置一个全局子组件，并且要传递item.id到这个子组件中去，这样就能访问具体的新闻了-->
-              <span @click="getNewsItem(item.id)">查看详情&gt;&gt;&gt;</span>
+<!--              <span @click="getNewsItem(item.id)"></span>-->
+              <router-link :to="'/news/' + item.id" tag="span">查看详情&gt;&gt;&gt;</router-link>
             </div>
           </div>
         </li>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-
 export default {
   data(){
     return{
@@ -46,17 +45,15 @@ export default {
       }
       // console.log(this.news)
     },
-    async getNewsItem(id){
-      // 父组件向子组件传递参数
-      return
-
-    }
+    // async getNewsItem(id){
+    //   // 父组件向子组件传递参数
+    //   return
+    // }
   },
   mounted () {
     this.getNews()
   },
   components:{
-
   }
 };
 </script>

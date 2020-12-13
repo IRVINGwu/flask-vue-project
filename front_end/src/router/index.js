@@ -31,6 +31,27 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Rumors.vue"),
   },
+  {
+    path: "/news/:id",
+    name: "NewsItem",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/NewsItem"),
+    props:true
+  },
+  {
+    path: "/:id",
+    name: "ChinaProvince",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/ChinaProvin"),
+    props:true
+  },
+  {
+    path: "/world/:id",
+    name: "WorldCountry",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/WorldCountry"),
+    props:true
+  },
 ];
 
 const router = new VueRouter({

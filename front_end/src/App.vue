@@ -54,6 +54,7 @@
     </router-view>
   </div>
 </template>
+
 <script>
 import {NavBar, Tabbar, TabbarItem} from 'vant'
 

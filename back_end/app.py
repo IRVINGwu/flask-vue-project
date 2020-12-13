@@ -32,11 +32,82 @@ def get_news():
     response = Response().getNews()
     return response
 
-@app.route('/mapJson/<name>',methods=['Get'])
+# 传送新闻详情到前端
+
+
+@app.route('/news/<number>', methods=['GET'])
+def get_news_item(number):
+    number = eval(number)
+    response = Response().getNewsItem(number)
+    return response
+
+
+# 传送地图所需要的json数据到前端
+
+
+@app.route('/mapJson/<name>', methods=['Get'])
 def get_mapJson(name):
     name1 = str(name)
-    print(name1)
     response = Response().getMapJson(name1)
+    return response
+
+
+# 发送中国各个省份数据到前端，用于展示每个省份的具体情况
+@app.route('/chinaProvinceDaily', methods=['GET'])
+def get_chinaProvinceDaily():
+    response = Response().getChinaProvinDailyData()
+    return response
+
+# TODO:这里做每个国家的详情数据
+# 发送各个国家详情数据，用于展示每个国家的具体情况
+@app.route('/worldDailyData/<country>', methods=['GET'])
+def get_worldDailyData(country):
+    response = Response().getWorldSingleData(country)
+    return response
+
+# 发送世界的详情数据，用于展示世界疫情发展趋势，线形图
+
+
+@app.route('/worldDaily', methods=['GET'])
+def get_worldDaily():
+    response = Response().getWorldDaily()
+    return response
+
+# 发送世界的详情数据，用于展示世界疫情发展趋势，线形图
+
+
+@app.route('/worldSum', methods=['GET'])
+def get_worldSum():
+    response = Response().getWorldSum()
+    return response
+
+# 发送中国当天数据到前端，用于展示地图
+
+@app.route('/chinaDaily', methods=['GET'])
+def get_chinaDaily():
+    response = Response().getChinaDaiy()
+    return response
+
+# 发送中国当天数据到前端，用于展示按日期排列的线形图
+
+@app.route('/chinaSum', methods=['GET'])
+def get_chinaSum():
+    response = Response().getChinaSum()
+    return response
+
+# TODO:这个路由做省份的数据
+# 发送中国当天数据到前端，用于展示线形图
+
+@app.route('/chinaProvince/<name>', methods=['Get'])
+def get_chinaProvince(name):
+    response = Response().getChinaProvinceData(name)
+    return response
+
+# 发送中国省份的城市当天数据到前端，用于展示地图和table表格
+
+@app.route('/chinaProvinCity/<name>', methods=['Get'])
+def get_chinaCity(name):
+    response = Response().getChinaCityData(name)
     return response
 
 

@@ -23,246 +23,224 @@
 
 <script>
 import echarts from "../assets/js/echarts.min.js";
-import axios from "axios";
 import { Tab, Tabs } from "vant";
 
 export default {
   data() {
     return {
       current: 0,
-      optionline: {
-        title: {
-          text: "ECharts 数据统计",
-        },
-        tooltip: {},
-        legend: {
-          data: ["用户来源"],
-        },
-        xAxis: {
-          data: ["Android", "IOS", "PC", "Ohter"],
-        },
-        yAxis: {},
-        series: [
-          {
-            name: "访问量",
-            type: "line", //设置图表主题
-            data: [500, 200, 360, 100],
-          },
-        ],
-      },
+      // 所需要的x轴和y轴数据
+      xdata:[],
+      ydata1:[],
+      ydata2:[],
+      ydata3:[],
+      ydata4:[],
+      ydata5:[],
+      ydata6:[],
+      // 制图所需要的数据
+      optionline1:{},
+      optionline2:{},
+      optionline3:{},
     };
   },
   created() {
-    // this.$nextTick(() => {
-    //   this.drawLine1();
-    //   this.drawLine2();
-    //   this.drawLine3();
-    // });
+    this.get_chinaSum();
   },
   methods: {
-    onClick(name, title) {
-      let chartline1 = echarts.init(document.getElementById("chartline1"));
-      let chartline2 = echarts.init(document.getElementById("chartline2"));
-      let chartline3 = echarts.init(document.getElementById("chartline3"));
-      if (title == "确诊趋势") {
-        // console.log(chartline2);
-        // console.log("确诊趋势");
-        chartline2.setOption(this.optionline);
-      } else if (title == "治疗趋势") {
-        // console.log("治疗趋势");
-        // console.log(chartline3);
-        chartline3.setOption(this.optionline);
-      } else {
-        //绘制图表
-        chartline1.setOption(this.optionline);
-      }
-    },
-    drawLine1() {
-      //基于准本好的DOM，初始化echarts实例
-      let chartline1 = echarts.init(document.getElementById("chartline1"));
-      //绘制图表
-      chartline1.setOption(this.optionline);
-    },
-    drawLine2() {
-      //基于准本好的DOM，初始化echarts实例
-      let line2 = document.getElementById("chartline2");
-      if (!line2) {
-        return false;
-      }
+    onClick(name, title='新增趋势') {
+      let line1 = document.getElementById("chartline1")
+      let line2 = document.getElementById("chartline2")
+      let line3 = document.getElementById("chartline3")
+      line1.style.display = 'block'
+      line2.style.display = 'block'
+      line3.style.display = 'block'
+
+      let chartline1 = echarts.init(line1);
       let chartline2 = echarts.init(line2);
-      // let chartline2 = echarts.init(this.$refs.line2);
-      //绘制图表
-      this.$nextTick(() => {
-        chartline2.setOption(this.optionline);
-      });
-      // chartline2.resize();
-    },
-    drawLine3() {
-      let line3 = document.getElementById("chartline3");
       let chartline3 = echarts.init(line3);
-      //绘制图表
-      chartline3.setOption(this.optionline);
+      // chartline1.setOption(this.optionline1);
+      if (title == "确诊趋势") {
+        chartline2.setOption(this.optionline2);
+      } else if (title == "治疗趋势") {
+        chartline3.setOption(this.optionline3);
+      } else if(title == "新增趋势"){
+        chartline1.setOption(this.optionline1);
+        chartline1.resize()
+      }
     },
 
-    //创造热力图
-    async creatDailyChart() {
-      const ret = await axios.get("china.json");
-      echarts.registerMap("china", ret.data);
-      let dataMap = [
-        //热力图的数据
-        { name: "北京", value: 500 },
-        { name: "天津", value: 400 },
-        { name: "上海", value: 500 },
-        { name: "重庆", value: 350 },
-        { name: "河北", value: 100 },
-        { name: "河南", value: 200 },
-        { name: "云南", value: 180 },
-        { name: "辽宁", value: 100 },
-        { name: "黑龙江", value: 100 },
-        { name: "湖南", value: 300 },
-        { name: "安徽", value: 330 },
-        { name: "山东", value: 200 },
-        { name: "新疆", value: 10 },
-        { name: "江苏", value: 340 },
-        { name: "浙江", value: 400 },
-        { name: "江西", value: 360 },
-        { name: "湖北", value: 300 },
-        { name: "广西", value: 400 },
-        { name: "甘肃", value: 100 },
-        { name: "山西", value: 100 },
-        { name: "内蒙古", value: 100 },
-        { name: "陕西", value: 100 },
-        { name: "吉林", value: 100 },
-        { name: "福建", value: 350 },
-        { name: "贵州", value: 100 },
-        { name: "广东", value: 500 },
-        { name: "青海", value: 100 },
-        { name: "西藏", value: 100 },
-        { name: "四川", value: 300 },
-        { name: "宁夏", value: 100 },
-        { name: "海南", value: 100 },
-        { name: "台湾", value: 100 },
-        { name: "香港", value: 300 },
-        { name: "澳门", value: 200 },
-        { name: "南海诸岛", value: 100 },
-      ];
-      // 需要在页面上直接标记出来的城市
-      let specialMap = [];
-      // 对dataMap进行处理，使其可以直接在页面上展示
-      for (let i = 0; i < specialMap.length; i++) {
-        for (let j = 0; j < dataMap.length; j++) {
-          if (specialMap[i] == dataMap[j].name) {
-            dataMap[j].selected = true;
-            break;
-          }
+    //获取制图所需要的数据
+    async get_chinaSum(){
+      const body = await this.$http.get('/chinaSum')
+      if(body.status == 200){
+        // console.log(body.data)
+        let result = body.data
+        for (let i = 0; i < result.length; i++) {
+          this.xdata.push(result[i].date)
+          //新增确诊和新增疑似病例对比
+          this.ydata1.push(result[i].today.confirm)
+          this.ydata2.push(result[i].today.suspect)
+          //新增确诊和累计确诊病例对比
+          this.ydata3.push(result[i].today.confirm)
+          this.ydata4.push(result[i].total.confirm)
+          //累计治愈和累计死亡病例对比
+          this.ydata5.push(result[i].total.heal)
+          this.ydata6.push(result[i].total.dead)
         }
       }
-      //Echart的配置选项
-      let option = {
-        tooltip: {
-          //悬浮时显示
-          formatter: function(params) {
-            var info = '<p style="font-size:18px">' + params.name + "</p>";
-            // var info = '<p style="font-size:18px">' + params.name + '</p><p style="font-size:14px">这里可以写一些，想展示在页面上的别的信息</p>'
-            return info;
-          },
-          backgroundColor: "#ff7f50", //提示标签背景颜色
-          textStyle: { color: "#fff" }, //提示标签字体颜色
+      // 创建optionline
+      this.optionline1 = {
+        // title:{
+        //   text:"新增确诊与新增疑似",
+        // },
+        tooltip:{
+          trigger: 'axis',
+          axisPointer:{lineStyle:{color:'rgb(239, 243, 250)'},},
+          backgroundColor:'#fff',
+          textStyle:{color:'#999', fontSize:12,},
+          extraCssText: 'box-shadow: 0 2px 10px #ccc;'
         },
-        //左侧小导航图标
-        visualMap: {
+        legend:{
+          data:[
+              '新增确诊','新增疑似'
+          ],
           show: true,
-          x: "left",
-          // y: 'center',
-          bottom: "0%", //组件离容器下侧的距离,'20%'
-          itemWidth: 5, //图形的宽度，即长条的宽度。
-          itemHeight: 5, //图形的高度，即长条的高度。
-          textGap: 5, //两端文字主体之间的距离，单位为px
-          textStyle: {
-            //文本样式
-            fontSize: 10,
-          },
-          itemGap: 4, //每两个图元之间的间隔距离，单位为px
-          splitList: [
-            { start: 500, end: 600 },
-            { start: 400, end: 500 },
-            { start: 300, end: 400 },
-            { start: 200, end: 300 },
-            { start: 100, end: 200 },
-            { start: 0, end: 100 },
-          ],
-          color: [
-            "#663366",
-            "#990033",
-            "#ff0033",
-            "#99cccc",
-            "#cccc00",
-            "#ffcc99",
-          ],
+          top:"20",
         },
-        series: [
+        xAxis: [
           {
-            name: "中国",
-            type: "map",
-            zoom: 1.2, //这里是关键，一定要放在 series中，地图缩放比例的配置
-            mapType: "china",
-            label: {
-              //地图中的文字
-              normal: {
-                //正常显示
-                show: false, //显示省份标签
-                textStyle: {
-                  fontSize: 10,
-                  color: "#6c6a6a",
-                },
-              },
-              // emphasis: {//悬浮时显示
-              //     show: true,//对应的鼠标悬浮效果
-              // }
-            },
-
-            data: dataMap,
-          },
+            type: 'category',
+            data: this.xdata
+          }
         ],
-      };
-      //初始化echarts实例
-      let myChart = echarts.init(document.getElementById("container_daily"));
-      //使用制定的配置项和数据显示图表
-      myChart.setOption(option);
-    },
+        yAxis:[{
+          type: 'value'
+        }],
+        dataZoom: [{
+          type: 'slider',
+          start: 0,
+          end: 100,
+          bottom: 0,
+          show: true
+        }],
+        series:[
+          {
+            name:'新增确诊',
+            type:"line",
+            data:this.ydata1
+          },
+          {
+            name:'新增疑似',
+            type:"line",
+            data:this.ydata2
+          }
+        ]
+      }
 
-    // charts() {
-    //   let chart = this.echarts.init(document.getElementById("main"));
-    //   //ajax请求接口获取数据
-    //   this.Axios({
-    //     url: "你自己的后台接口地址",
-    //     params: _params,
-    //   }).then(
-    //     (response) => {
-    //       var res = response.data;
-    //       if (res && res.code === "0") {
-    //         chart.setOption(res);
-    //       } else {
-    //         this.$Message.error(res.msg);
-    //       }
-    //     },
-    //     (error) => {
-    //       if (error.response) {
-    //         const _result = error.response.data;
-    //         this.$Message.error(_result.msg);
-    //       } else {
-    //         this.$Message.error("操作异常，请检查网络！");
-    //       }
-    //     }
-    //   );
-    // },
+      this.optionline2 = {
+        // title:{
+        //   text:"新增确诊与累计确诊",
+        // },
+        tooltip:{
+          trigger: 'axis',
+          axisPointer:{lineStyle:{color:'rgb(239, 243, 250)'},},
+          backgroundColor:'#fff',
+          textStyle:{color:'#999', fontSize:12,},
+          extraCssText: 'box-shadow: 0 2px 10px #ccc;'
+        },
+        legend:{
+          data:[
+            '新增确诊','累计确诊'
+          ],
+          show: true,
+          top:"20",
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: this.xdata
+          }
+        ],
+        yAxis:[{
+          type: 'value'
+        }],
+        dataZoom: [{
+          type: 'slider',
+          start: 0,
+          end: 100,
+          bottom: 0,
+          show: true
+        }],
+        series:[
+          {
+            name:'新增确诊',
+            type:"line",
+            data:this.ydata3
+          },
+          {
+            name:'累计确诊',
+            type:"line",
+            data:this.ydata4
+          }
+        ]
+      }
+
+      this.optionline3 = {
+        // title:{
+        //   text:"累计治愈与累计死亡",
+        // },
+        tooltip:{
+          trigger: 'axis',
+          axisPointer:{lineStyle:{color:'rgb(239, 243, 250)'},},
+          backgroundColor:'#fff',
+          textStyle:{color:'#999', fontSize:12,},
+          extraCssText: 'box-shadow: 0 2px 10px #ccc;'
+        },
+        legend:{
+          data:[
+            '累计治愈','累计死亡'
+          ],
+          show: true,
+          top:"20",
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: this.xdata
+          }
+        ],
+        yAxis:[{
+          type: 'value'
+        }],
+        dataZoom: [{
+          type: 'slider',
+          start: 0,
+          end: 100,
+          bottom: 0,
+          show: true
+        }],
+        series:[
+          {
+            name:'累计治愈',
+            type:"line",
+            data:this.ydata5
+          },
+          {
+            name:'累计死亡',
+            type:"line",
+            data:this.ydata6
+          }
+        ]
+      }
+
+      // 这句非常重要，我在查了很多资料之后才知道的，原来onClick()里面在初始化的时候没有获取到
+      // 数据，结果就没有办法渲染出图表，这里的意思是，先获取数据，然后作图
+      this.onClick()
+    }
+
   },
   props: {},
-  mounted() {
-    this.$nextTick(() => {
-      this.onClick();
-    });
-  },
+  mounted() {},
   destroyed() {},
   components: {
     [Tab.name]: Tab,
@@ -277,5 +255,16 @@ export default {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  van-tabs{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    overflow: hidden;
+    van-tab{
+      width: 100%;
+      height: 400px;
+      display: block;
+    }
+  }
 }
 </style>

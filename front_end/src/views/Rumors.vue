@@ -56,8 +56,7 @@ export default {
       if(body.status == 200){
         this.result = body.data
       }
-      console.log(this.result)
-      // console.log(body)
+      // console.log(this.result)
     }
   },
   props: {},
@@ -79,8 +78,8 @@ export default {
 
     .img2 {
       position: absolute;
-      width: 15%;
-      height: 60%;
+      width: 70px;
+      height: 70px;
       left: 10px;
       top: 10px;
     }

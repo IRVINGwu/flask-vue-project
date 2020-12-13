@@ -17,30 +17,30 @@
         <h3>全国疫情数据(含港澳台)</h3>
         <van-grid :column-num="3" :gutter="6" class="vanGrid" :border="true">
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_1"
-            ><span>现有确诊</span><span class="number_1">3333</span
+            ><span>现有确诊</span><span class="number_1">{{ chinaDataToday.confirm }}</span
             ><span
-              >较上日:<span class="number_1">222</span></span
+              >较上日:<span class="number_1">{{ chinaDataToday.storeConfirm }}</span></span
             ></van-grid-item
           >
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_2"
-            ><span>无症状感染者</span><span class="number_2">3333</span
-            ><span>较上日:<span class="number_2"></span></span
+            ><span>无症状感染者</span><span class="number_2">{{ extDat.noSymptom }}</span
+            ><span>较上日:<span class="number_2">+{{ extDat.incrNoSymptom }}</span></span
           ></van-grid-item>
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_3"
-            ><span>境外输入</span><span class="number_3">3333</span
-            ><span>较上日:<span class="number_3"></span></span
+            ><span>境外输入</span><span class="number_3">{{chinaDataTotal.input}}</span
+            ><span>较上日:<span class="number_3">+{{ chinaDataToday.input }}</span></span
           ></van-grid-item>
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_4"
-            ><span>累计确诊</span><span class="number_4">3333</span
-            ><span>较上日:<span class="number_4"></span></span
+            ><span>累计确诊</span><span class="number_4">{{chinaDataTotal.confirm}}</span
+            ><span>较上日:<span class="number_4">+{{ chinaDataToday.input }}</span></span
           ></van-grid-item>
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_5"
-            ><span>累计治愈</span><span class="number_5">3333</span
-            ><span>较上日:<span class="number_5"></span></span
+            ><span>累计治愈</span><span class="number_5">{{chinaDataTotal.heal}}</span
+            ><span>较上日:<span class="number_5">+{{ chinaDataToday.heal }}</span></span
           ></van-grid-item>
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_6"
-            ><span>累计死亡</span><span class="number_6">3333</span
-            ><span>较上日:<span class="number_6"></span></span
+            ><span>累计死亡</span><span class="number_6">{{chinaDataTotal.dead}}</span
+            ><span>较上日:<span class="number_6">+{{ chinaDataToday.dead }}</span></span
           ></van-grid-item>
         </van-grid>
         <h4>统计截止至:2020-12-08</h4>
@@ -109,7 +109,25 @@ import ChinaTable from "../components/ChinaDataTable.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      chinaDataToday:'',
+      chinaDataTotal:'',
+      extDat:''
+    };
+  },
+  methods:{
+    async get_chinaData(){
+      const body = await this.$http.get('/chinaDaily')
+      if(body.status == 200){
+        this.chinaDataToday = body.data.today
+        this.chinaDataTotal = body.data.total
+        this.extDat = body.data.extData
+        // console.log(this.chinaDataToday)
+      }
+    }
+  },
+  mounted () {
+    this.get_chinaData()
   },
   components: {
     [Grid.name]: Grid,
@@ -165,7 +183,7 @@ h3 {
         margin: 0 0 5px 0;
       }
       h4 {
-        margin: 0;
+        margin: 5px 0;
         padding: 0;
         font-size: 12px;
         color: rgb(124, 124, 124);

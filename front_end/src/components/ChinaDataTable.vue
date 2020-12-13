@@ -12,29 +12,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>香港</td>
-          <td>1234</td>
-          <td>8888</td>
-          <td>5555</td>
-          <td>113</td>
-          <td>详情</td>
-        </tr>
-        <tr>
-          <td>香港</td>
-          <td>1234</td>
-          <td>8888</td>
-          <td>5555</td>
-          <td>113</td>
-          <td>详情</td>
-        </tr>
-        <tr>
-          <td>香港</td>
-          <td>1234</td>
-          <td>8888</td>
-          <td>5555</td>
-          <td>113</td>
-          <td>详情</td>
+        <tr v-for="(item,index) in tablelist" :key="item.id">
+          <td>{{ item.省份名 }}</td>
+          <td>{{ item.今日确诊 }}</td>
+          <td>{{item.总确诊数}}</td>
+          <td>{{item.总治愈数}}</td>
+          <td>{{item.总死亡数}}</td>
+          <router-link :to="'/' + item.省份名" tag="td">详情&gt;</router-link>
         </tr>
       </tbody>
     </table>
@@ -44,11 +28,23 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      tablelist:[]
+    };
   },
-  methods: {},
+  methods: {
+    async get_chinaTable(){
+      const body = await this.$http.get("/chinaProvinceDaily")
+      if(body.status == 200){
+        this.tablelist = body.data
+        // console.log(body.data)
+      }
+    }
+  },
   created() {},
-  mounted() {},
+  mounted() {
+    this.get_chinaTable()
+  },
   props: {},
 };
 </script>
@@ -100,6 +96,10 @@ export default {
         td {
           border: 0;
           border-bottom: 1px solid #dee2e6;
+        }
+        td:nth-child(6){
+          color: red;
+          font-size: 16px;
         }
       }
     }
