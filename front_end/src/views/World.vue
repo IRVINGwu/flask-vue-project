@@ -93,7 +93,7 @@ h3 {
   padding: 0;
 }
 .world_container {
-  margin-top: 46px;
+  //margin-top: 46px;
   margin-bottom: 35px;
   .world_header {
     position: relative;

@@ -63,7 +63,7 @@ class Response:
 
     # 获取中国当天的数据，用于展示地图
 
-    def getChinaDaiy(self):
+    def getChinaDaily(self):
         r = requests.get(
             'https://c.m.163.com/ug/api/wuhan/app/data/list-total',
             headers={
@@ -71,10 +71,10 @@ class Response:
 
         # 返回的数据r.json()是一个字典，需要转换为json
         content = json.dumps(r.json(), ensure_ascii=False)
-        df = pd.read_json(content, orient='records')
-        # 因为筛选出来的数据是字典类型，所以需要转换为json类型
-        data = json.dumps(df.loc['chinaTotal', 'data'], ensure_ascii=False)
-        return data
+        # df = pd.read_json(content, orient='records')
+        # # 因为筛选出来的数据是字典类型，所以需要转换为json类型
+        # data = json.dumps(df.loc['chinaTotal', 'data'], ensure_ascii=False)
+        return content
 
     # 获取中国按天数排列的数据，用于展示线形图
     def getChinaSum(self, orient='index'):

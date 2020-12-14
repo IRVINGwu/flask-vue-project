@@ -124,6 +124,7 @@ export default {
 
         // 这里是为了让图表右边的空白少一点，看上去好看一些
         grid: {
+          x:50,
           x2: 25,
         },
       }
@@ -191,6 +192,7 @@ export default {
           },
         ],
         grid: {
+          x:50,
           x2: 25,
         },
       }
@@ -259,6 +261,7 @@ export default {
           },
         ],
         grid: {
+          x:50,
           x2: 25,
         },
       }

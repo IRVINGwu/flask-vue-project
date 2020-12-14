@@ -35,7 +35,7 @@ export default {
 
 <style scoped lang="scss">
 .newsItem{
-  margin-top: 46px;
+  //margin-top: 46px;
   margin-bottom: 50px;
   padding: 10px;
   h3{

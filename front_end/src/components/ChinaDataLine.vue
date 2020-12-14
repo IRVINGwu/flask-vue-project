@@ -134,7 +134,11 @@ export default {
             type:"line",
             data:this.ydata2
           }
-        ]
+        ],
+        grid: {
+          x:50,
+          x2: 25,
+        },
       }
 
       this.optionline2 = {
@@ -182,7 +186,11 @@ export default {
             type:"line",
             data:this.ydata4
           }
-        ]
+        ],
+        grid: {
+          x:50,
+          x2: 25,
+        },
       }
 
       this.optionline3 = {
@@ -230,7 +238,11 @@ export default {
             type:"line",
             data:this.ydata6
           }
-        ]
+        ],
+        grid: {
+          x:50,
+          x2: 25,
+        },
       }
 
       // 这句非常重要，我在查了很多资料之后才知道的，原来onClick()里面在初始化的时候没有获取到

@@ -1,22 +1,22 @@
 <template>
   <div class="china_map_container">
     <div class="map">
-      <!-- 中国疫情现有确诊热力图 -->
-      <div id="container_daily" class="china_map" v-show="mapShow"></div>
-      <!-- 中国疫情累计确诊热力图 -->
-      <div id="container_sum" class="china_map" v-show="!mapShow">nihao</div>
+      <transition>
+        <!-- 中国疫情现有确诊热力图 -->
+        <div id="container_daily" class="china_map" v-show="mapShow"></div>
+      </transition>
+      <transition>
+        <!-- 中国疫情累计确诊热力图 -->
+        <div id="container_sum" class="china_map" v-show="!mapShow">nihao</div>
+      </transition>
     </div>
 
     <!-- 两个按钮用于切换显示热力图 -->
     <div class="map_button">
-      <van-button plain type="primary" class="button_item" @click="showDaily"
-      >现有确诊
-      </van-button
-      >
-      <van-button plain type="primary" class="button_item" @click="showSum"
-      >累计确诊
-      </van-button
-      >
+      <van-button plain type="primary" class="button_item" @click="showDaily">现有确诊
+      </van-button>
+      <van-button plain type="primary" class="button_item" @click="showSum">累计确诊
+      </van-button>
     </div>
   </div>
 </template>
@@ -31,12 +31,13 @@ export default {
       mapShow: true,
     }
   },
-  mounted () {
+  created () {
     this.$nextTick(function () {
-      // this.drawLine();
       this.creatDailyChart()
       this.getSumChart()
     })
+  },
+  mounted () {
   },
   methods: {
     //今日确诊热力图
@@ -48,6 +49,7 @@ export default {
       // 获取疫情数据
       const body = await this.$http.get('/chinaProvinceDaily')
       // console.log(body.data)
+      this.msgFromSon = body.data[0].最新更新时间
       // 创建dataMap
       let dataMap = []
       // 因为body.data的类型是对象，所以要用循环对象的方法来做
@@ -77,7 +79,7 @@ export default {
         tooltip: {
           //悬浮时显示
           formatter: function (params) {
-            var info = '<p style="font-size:16px;color:white;padding-left: 0;width: 108px;height: 30px;text-align: center;padding-top: 4px;">' + params.name + '<br>'+ '今日确诊：' + params.value + '</p>'
+            var info = '<p style="font-size:16px;color:white;padding-left: 0;width: 108px;height: 30px;text-align: center;padding-top: 4px;">' + params.name + '<br>' + '今日确诊：' + params.value + '</p>'
             return info
           },
           backgroundColor: 'rgba(0,0,0,0.5)', //提示标签背景颜色
@@ -142,7 +144,7 @@ export default {
       //使用制定的配置项和数据显示图表
       myChart.setOption(option)
     },
-    async getSumChart(){
+    async getSumChart () {
       // 获取地图所需的json数据
       const result = await this.$http.get('/mapJson/china')
       echarts.registerMap('china', result.data)
@@ -179,7 +181,7 @@ export default {
         tooltip: {
           //悬浮时显示
           formatter: function (params) {
-            var info = '<p style="font-size:14px;color:white;width: 108px;height: 30px;text-align: center;padding-top: 4px;padding-left: 0;">' + params.name + '<br>'+ '累计确诊：' + params.value + '</p>'
+            var info = '<p style="font-size:14px;color:white;width: 108px;height: 30px;text-align: center;padding-top: 4px;padding-left: 0;">' + params.name + '<br>' + '累计确诊：' + params.value + '</p>'
             return info
           },
           backgroundColor: 'rgba(0,0,0,0.5)', //提示标签背景颜色
@@ -241,14 +243,13 @@ export default {
       }
       //初始化echarts实例
       let chart = document.getElementById('container_sum')
-
       //用这个就让切换时图表不会出现width:100px的情况，inline-block和block都可以，这样会在初始化的时候就出现
       //为了解决在初始化时出现两张图表的情况，在.map中，将溢出部分隐藏即可
       chart.style.display = 'inline-block'
       let myChart = echarts.init(chart)
       //使用制定的配置项和数据显示图表
       myChart.resize()
-      myChart.setOption(option,true)
+      myChart.setOption(option, true)
     },
     showDaily () {
       this.mapShow = true
@@ -271,14 +272,30 @@ export default {
   margin: 0;
   box-sizing: border-box;
 
-  .map{
+  .map {
     width: 100%;
     height: 300px;
     overflow: hidden;
+
     .china_map {
       width: 100%;
       height: 300px;
       border: 1px solid #ccc;
+    }
+
+    .v-enter {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    .v-leave-to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+      transition: all .5s ease;
     }
   }
 

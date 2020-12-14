@@ -88,7 +88,7 @@ def get_worldSum():
 
 @app.route('/chinaDaily', methods=['GET'])
 def get_chinaDaily():
-    response = Response().getChinaDaiy()
+    response = Response().getChinaDaily()
     return response
 
 # 发送中国当天数据到前端，用于展示按日期排列的线形图
@@ -121,6 +121,6 @@ def get_chinaCity(name):
 if __name__ == '__main__':
     app.run(
         host='192.168.0.106',
-        port=5000,
+        port=8080,
         debug=True
     )

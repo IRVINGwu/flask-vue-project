@@ -60,7 +60,7 @@ export default {
 
 <style lang="scss">
 .news_container {
-  margin-top: 46px;
+  //margin-top: 46px;
   margin-bottom: 35px;
   .news_header {
     position: relative;

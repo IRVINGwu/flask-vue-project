@@ -1,61 +1,60 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
-Vue.use(VueRouter);
-
+Vue.use(VueRouter)
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
   },
   {
-    path: "/world",
-    name: "World",
+    path: '/world',
+    name: 'World',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/World.vue"),
+      import(/* webpackChunkName: "about" */ '../views/World.vue'),
   },
   {
-    path: "/news",
-    name: "News",
+    path: '/news',
+    name: 'News',
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/News.vue"),
+      import(/* webpackChunkName: "about" */ '../views/News.vue'),
   },
   {
-    path: "/rumors",
-    name: "Rumors",
+    path: '/rumors',
+    name: 'Rumors',
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Rumors.vue"),
+      import(/* webpackChunkName: "about" */ '../views/Rumors.vue'),
   },
   {
-    path: "/news/:id",
-    name: "NewsItem",
+    path: '/news/:id',
+    name: 'NewsItem',
     component: () =>
-      import(/* webpackChunkName: "about" */ "../components/NewsItem"),
-    props:true
+      import(/* webpackChunkName: "about" */ '../components/NewsItem'),
+    props: true
   },
   {
-    path: "/:id",
-    name: "ChinaProvince",
+    path: '/:id',
+    name: 'ChinaProvince',
     component: () =>
-      import(/* webpackChunkName: "about" */ "../components/ChinaProvin"),
-    props:true
+      import(/* webpackChunkName: "about" */ '../components/ChinaProvin'),
+    props: true
   },
   {
-    path: "/world/:id",
-    name: "WorldCountry",
+    path: '/world/:id',
+    name: 'WorldCountry',
     component: () =>
-      import(/* webpackChunkName: "about" */ "../components/WorldCountry"),
-    props:true
+      import(/* webpackChunkName: "about" */ '../components/WorldCountry'),
+    props: true
   },
-];
-
+]
 const router = new VueRouter({
   routes,
-});
-
-export default router;
+  linkActiveClass: 'van-tabbar-item--active',
+  linkExactActiveClas:'van-tabbar-item--active'
+})
+export default router

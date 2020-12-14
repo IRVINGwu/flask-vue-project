@@ -180,6 +180,10 @@ export default {
             data: this.dataMap,
           },
         ],
+        grid: {
+          x:50,
+          x2: 25,
+        },
       }
       //初始化echarts实例
       let myChart = echarts.init(document.getElementById('province_map'))
@@ -197,7 +201,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .china_province {
-  margin-top: 46px;
+  //margin-top: 46px;
   margin-bottom: 35px;
   padding: 5px;
 
@@ -219,15 +223,16 @@ export default {
         tr {
           th {
             border: 0;
-            font-size: 15px;
-            padding: 15px 5px;
+            font-size: 0.625rem;
+            padding: 15px 0;
             text-align: center;
           }
 
           th:nth-child(1) {
             background-color: rgb(245, 245, 245);
             color: rgb(34, 34, 34);
-            font-size: 14px;
+            text-align: left;
+            padding-left: 0.8rem;
           }
 
           th:nth-child(2) {
@@ -254,7 +259,7 @@ export default {
 
       tbody {
         tr {
-          font-size: 16px;
+          font-size: 0.625rem;
           text-align: center;
 
           td {
@@ -263,7 +268,7 @@ export default {
           }
 
           td:nth-child(1) {
-            font-size: 14px;
+            text-align: left;
           }
         }
       }

@@ -5,7 +5,7 @@
       <tr>
         <th scope="col">国家</th>
         <th scope="col">现有确诊</th>
-        <th scope="col">累计确诊</th>
+<!--        <th scope="col">累计确诊</th>-->
         <th scope="col">治愈</th>
         <th scope="col">死亡</th>
         <th scope="col">疫情</th>
@@ -15,7 +15,7 @@
       <tr v-for="(item,index) in tablelist" :key="item.id">
         <td>{{ item.name }}</td>
         <td>{{ item.today.confirm }}</td>
-        <td>{{item.total.confirm }}</td>
+<!--        <td>{{item.total.confirm }}</td>-->
         <td>{{item.total.heal}}</td>
         <td>{{item.total.dead}}</td>
         <router-link :to="'/world/' + item.name" tag="td">more</router-link>
@@ -59,8 +59,8 @@ export default {
       tr {
         th {
           border: 0;
-          font-size: 0.5rem;
-          padding: 15px 5px;
+          font-size: 0.4rem;
+          padding: 15px 0;
           text-align: center;
         }
         th:nth-child(1) {
@@ -73,19 +73,19 @@ export default {
           background-color: rgb(252, 242, 232);
           color: rgb(255, 114, 60);
         }
+        //th:nth-child(3) {
+        //  background-color: rgb(253, 238, 238);
+        //  color: rgb(246, 104, 133);
+        //}
         th:nth-child(3) {
-          background-color: rgb(253, 238, 238);
-          color: rgb(246, 104, 133);
-        }
-        th:nth-child(4) {
           background-color: rgb(233, 247, 236);
           color: rgb(132, 139, 80);
         }
-        th:nth-child(5) {
+        th:nth-child(4) {
           background-color: rgb(243, 246, 248);
           color: rgb(78, 90, 101);
         }
-        th:nth-child(6) {
+        th:nth-child(5) {
           background-color: rgb(245, 245, 245);
           color: rgb(68, 34, 75);
         }
@@ -100,11 +100,11 @@ export default {
           border-bottom: 1px solid #dee2e6;
         }
         td:nth-child(1){
-          font-size: 0.5rem;
+          font-size: 0.3rem;
           text-align: left;
         }
-        td:nth-child(6){
-          font-size: 0.4rem;
+        td:nth-child(5){
+          font-size: 0.3rem;
           color: red;
           text-align: left;
         }

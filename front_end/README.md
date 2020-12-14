@@ -209,3 +209,58 @@ echarts图表确实很麻烦，我的调试方法是：每一步都`console.log(
 
 ------
 
+### 底部tab栏的选中高亮状态
+
+查看的文档：https://blog.csdn.net/weixin_43817709/article/details/104023966?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control
+
+我使用了vant的tabbar模块，它有一个用于显示高亮的方法：
+
+```vue
+<van-tabbar v-model="active">
+  <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+  <van-tabbar-item icon="search">标签</van-tabbar-item>
+  <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+</van-tabbar>
+
+<script>
+export default {
+  data() {
+    return {
+      active: 0,     //通过绑定active的值，来实现在切换tab时，同时切换高亮的状态。
+    };
+  },
+};
+</script>	
+```
+
+但是我按返回键之后，返回了原来的界面，高亮状态并没有跟着改变，为什么呢？因为在按返回键的时候，active的值并没有发生改变，是不是，想清楚没有？那么如何才能监听到active值的变化呢？或者更进一步的，让active的值跟着返回键所在的界面，返回相应的值？
+
+直接监听返回键是很难的，但是可以监听App.vue这个vue实例的router对象，这个对象会返回很多值，这个对象很重要，返回键也是使用这个对象的go方法来返回的（`this.$router.go(-1)`）。通过上述文档，我发现可以利用`this.$router.name`来返回相应的值，然后为`active`这个函数返回一个值，就会显示相应的tabbar。
+
+以下是代码：
+
+```js
+computed: {
+    active () {//匹配路由的名字，给active赋值
+      if(this.$route.name == 'Home'){
+        return 0
+      }else if(this.$route.name == 'World'){
+        return 1
+      }else if(this.$route.name == 'News'){
+        return 2
+      }else{
+        return 3
+      }
+    }
+  }
+```
+
+注意，这时候`<van-tabbar v-model="active">`里面的这个active就是这个active函数，只要这个函数返回的是一个值即可。
+
+这里还用到了`computed:{}`属性，这个属性就会监听url地址的变化。但是这里需要设置两个方法，vue规定的，get()和set()方法，但这里太复杂，所以我将`v-model`换为了`:value`，这就没有问题了。
+
+这是computed{}方法报错的解决办法：https://blog.csdn.net/weixin_38779534/article/details/105989139?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.control
+
+
+
