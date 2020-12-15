@@ -18,29 +18,29 @@
         <van-grid :column-num="3" :gutter="6" class="vanGrid" :border="true">
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_1"><span>现有确诊</span><span
               class="number_1">{{ chinaDataToday.confirm }}</span><span>较上日:<span
-              class="number_1">{{ chinaDataToday.storeConfirm }}</span></span></van-grid-item>
+              class="number_1">{{ chinaDataToday.storeConfirm | formatNumber }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_2"><span>无症状感染者</span><span
-              class="number_2">{{ extDat.noSymptom }}</span><span>较上日:<span class="number_2">+{{
-              extDat.incrNoSymptom
+              class="number_2">{{ extDat.noSymptom }}</span><span>较上日:<span class="number_2">{{
+              extDat.incrNoSymptom | formatNumber
             }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_3"><span>境外输入</span><span
               class="number_3">{{ chinaDataTotal.input }}</span><span>较上日:<span
-              class="number_3">+{{ chinaDataToday.input }}</span></span></van-grid-item>
+              class="number_3">{{ chinaDataToday.input | formatNumber }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_4"><span>累计确诊</span><span
               class="number_4">{{ chinaDataTotal.confirm }}</span><span>较上日:<span
-              class="number_4">+{{ chinaDataToday.input }}</span></span></van-grid-item>
+              class="number_4">{{ chinaDataToday.input | formatNumber }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_5"><span>累计治愈</span><span
-              class="number_5">{{ chinaDataTotal.heal }}</span><span>较上日:<span class="number_5">+{{
-              chinaDataToday.heal
+              class="number_5">{{ chinaDataTotal.heal }}</span><span>较上日:<span class="number_5">{{
+              chinaDataToday.heal | formatNumber
             }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_6"><span>累计死亡</span><span
-              class="number_6">{{ chinaDataTotal.dead }}</span><span>较上日:<span class="number_6">+{{
-              chinaDataToday.dead
+              class="number_6">{{ chinaDataTotal.dead }}</span><span>较上日:<span class="number_6">{{
+              chinaDataToday.dead | formatNumber
             }}</span></span></van-grid-item>
         </van-grid>
         <h4>统计截止至:{{ date }}</h4>

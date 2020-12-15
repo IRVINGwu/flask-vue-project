@@ -9,7 +9,7 @@
 
     <!-- tabbar区域 -->
     <div class="tabbar">
-      <van-tabbar :value="active">
+      <van-tabbar v-model="active">
         <router-link to="/" name="Home" tag="a" class="van-tabbar-item">
           <van-tabbar-item icon="chart-trending-o">国内疫情</van-tabbar-item>
         </router-link>
@@ -67,14 +67,20 @@ export default {
   },
   computed: {
     active () {//获取到路由的名字给active赋值
-      if(this.$route.name == 'Home'){
+      if(this.$route.name == 'Home' || this.$route.name == 'ChinaProvince'){
+        // console.log(this.$route.name)
         return 0
-      }else if(this.$route.name == 'World'){
+      }else if(this.$route.name == 'World' || this.$route.name == 'WorldCountry'){
+        // console.log(this.$route.name)
         return 1
-      }else if(this.$route.name == 'News'){
+      }else if(this.$route.name == 'News' || this.$route.name == 'NewsItem'){
+        // console.log(this.$route.name)
         return 2
-      }else{
+      }else if(this.$route.name == 'Rumors'){
+        // console.log(this.$route.name)
         return 3
+      }else{
+        console.log(this.$route.name)
       }
     }
   }
@@ -104,7 +110,7 @@ export default {
       font-size: 0.8rem;
       color: #020202;
       margin-left: 50%;
-      transform: translateX(-1.9rem);
+      transform: translateX(-1.5rem);
     }
   }
 

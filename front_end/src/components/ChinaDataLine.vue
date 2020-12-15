@@ -88,6 +88,7 @@ export default {
           this.ydata6.push(result[i].total.dead)
         }
       }
+      // console.log(this.ydata5)
       // 创建optionline
       this.optionline1 = {
         // title:{

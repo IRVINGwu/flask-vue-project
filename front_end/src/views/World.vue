@@ -16,15 +16,15 @@
         <van-grid :column-num="3" :gutter="6" class="vanGrid" :border="true">
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_4"
           ><span>累计确诊</span><span class="number_4">{{ totalConfirm }}</span
-          ><span>较上日:<span class="number_4">+{{ todayConfirm }}</span></span
+          ><span>较上日:<span class="number_4">{{ todayConfirm | formatNumber}}</span></span
           ></van-grid-item>
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_5"
           ><span>累计治愈</span><span class="number_5">{{ totalHeal }}</span
-          ><span>较上日:<span class="number_5">+{{ todayHeal }}</span></span
+          ><span>较上日:<span class="number_5">{{ todayHeal | formatNumber}}</span></span
           ></van-grid-item>
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_6"
           ><span>累计死亡</span><span class="number_6">{{ totalDead }}</span
-          ><span>较上日:<span class="number_6">+{{ todayDead }}</span></span
+          ><span>较上日:<span class="number_6">{{ todayDead | formatNumber}}</span></span
           ></van-grid-item>
         </van-grid>
         <h4>统计截止至:{{ date }}</h4>
