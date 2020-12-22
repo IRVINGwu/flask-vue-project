@@ -107,7 +107,7 @@ def get_news():
 
 ![image-20201213205511391](https://i.loli.net/2020/12/13/UoaZlOK4rAbwi16.png)
 
-![image-20201213210955644](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201213210955644.png)
+![image-20201213210955644](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20201213210955644.png)
 
 当然，为了保险起见，还需要在`app.py`里面将地址改掉：
 
@@ -122,4 +122,21 @@ if __name__ == '__main__':
 
 还要将前端里面`axios.baseURL`由`127.0.0.1:5000`改为这个地址`192.168.0.106:5000`，这样项目就可以在手机上进行调试了。
 
+```js
+axios.defaults.baseURL = "http://192.168.0.107:8080";
+```
+
 **当然，上线之后要改掉，就改成127.0.0.1，要让别人自己的ipv4来用，免得暴露自己的地址。**
+
+<hr>
+**问题：**
+
+![image-20201222142311668](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20201222142311668.png)
+
+改了之后运行的好好的，结果第二天就不行了，我还以为是pycharm的问题，结果使用VSCODE还是不行，接着几天都是这样，后来我查看CMD里面的`ipconfig`，发现ipv4的地址改变了，这是为什么呢？还不知道，以后有问题先找这里就行了。
+
+![image-20201222142636058](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20201222142636058.png)
+
+网上查了一下，果然会变化：
+
+![image-20201222143942956](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20201222143942956.png)

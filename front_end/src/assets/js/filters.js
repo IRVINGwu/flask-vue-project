@@ -8,7 +8,9 @@ Vue.filter('formatDate',function(data){
 Vue.filter('formatNumber',function(data){
   if(data < 0 ){
     return data
-  }else{
+  }else if(data > 0){
     return '+' + data
+  }else{
+    return ''
   }
 })

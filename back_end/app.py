@@ -58,7 +58,7 @@ def get_chinaProvinceDaily():
     response = Response().getChinaProvinDailyData()
     return response
 
-# TODO:这里做每个国家的详情数据
+
 # 发送各个国家详情数据，用于展示每个国家的具体情况
 
 
@@ -99,7 +99,6 @@ def get_chinaSum():
     response = Response().getChinaSum()
     return response
 
-# TODO:这个路由做省份的数据
 # 发送中国当天数据到前端，用于展示线形图
 
 
@@ -120,7 +119,7 @@ def get_chinaCity(name):
 # 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
 if __name__ == '__main__':
     app.run(
-        host='192.168.0.106',
+        host='192.168.0.107',
         port=8080,
         debug=True
     )

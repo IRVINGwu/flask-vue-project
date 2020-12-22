@@ -17,33 +17,33 @@
         <h3>全国疫情数据(含港澳台)</h3>
         <van-grid :column-num="3" :gutter="6" class="vanGrid" :border="true">
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_1"><span>现有确诊</span><span
-              class="number_1">{{ chinaDataToday.confirm }}</span><span>较上日:<span
-              class="number_1">{{ chinaDataToday.storeConfirm | formatNumber }}</span></span></van-grid-item>
+              class="number_1" v-cloak>{{ chinaDataToday.confirm }}</span><span>较上日:<span
+              class="number_1" v-cloak>{{ chinaDataToday.storeConfirm | formatNumber }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_2"><span>无症状感染者</span><span
-              class="number_2">{{ extDat.noSymptom }}</span><span>较上日:<span class="number_2">{{
+              class="number_2" v-cloak>{{ extDat.noSymptom }}</span><span>较上日:<span class="number_2" v-cloak>{{
               extDat.incrNoSymptom | formatNumber
             }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_3"><span>境外输入</span><span
-              class="number_3">{{ chinaDataTotal.input }}</span><span>较上日:<span
-              class="number_3">{{ chinaDataToday.input | formatNumber }}</span></span></van-grid-item>
+              class="number_3" v-cloak>{{ chinaDataTotal.input }}</span><span>较上日:<span
+              class="number_3" v-cloak>{{ chinaDataToday.input | formatNumber }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_4"><span>累计确诊</span><span
-              class="number_4">{{ chinaDataTotal.confirm }}</span><span>较上日:<span
-              class="number_4">{{ chinaDataToday.input | formatNumber }}</span></span></van-grid-item>
+              class="number_4" v-cloak>{{ chinaDataTotal.confirm }}</span><span>较上日:<span
+              class="number_4" v-cloak>{{ chinaDataToday.input | formatNumber }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_5"><span>累计治愈</span><span
-              class="number_5">{{ chinaDataTotal.heal }}</span><span>较上日:<span class="number_5">{{
+              class="number_5" v-cloak>{{ chinaDataTotal.heal }}</span><span>较上日:<span class="number_5" v-cloak>{{
               chinaDataToday.heal | formatNumber
             }}</span></span></van-grid-item>
 
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_6"><span>累计死亡</span><span
-              class="number_6">{{ chinaDataTotal.dead }}</span><span>较上日:<span class="number_6">{{
+              class="number_6" v-cloak>{{ chinaDataTotal.dead }}</span><span>较上日:<span class="number_6" v-cloak>{{
               chinaDataToday.dead | formatNumber
             }}</span></span></van-grid-item>
         </van-grid>
-        <h4>统计截止至:{{ date }}</h4>
+        <h4 v-cloak>统计截止至:{{ date }}</h4>
       </div>
 
       <!-- 全国疫情概况 -->
@@ -97,12 +97,29 @@
           </div>
         </div>
       </div>
+
+<!--      冬季疫情预防注意事项轮播图-->
+      <div class="swiper">
+        <h3>冬季疫情预防注意事项</h3>
+        <van-swipe class="my-swipe" :autoplay="5000" indicator-color="white">
+          <van-swipe-item><img src="../assets/images/guide-1.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-2.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-3.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-4.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-5.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-6.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-7.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-8.jpg" alt=""></van-swipe-item>
+          <van-swipe-item><img src="../assets/images/guide-9.jpg" alt=""></van-swipe-item>
+        </van-swipe>
+
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {Grid, GridItem} from 'vant'
+import {Grid, GridItem, Swipe, SwipeItem} from 'vant'
 import ChinaMap from '../components/ChinaDataMap.vue'
 import ChinaLine from '../components/ChinaDataLine.vue'
 import ChinaTable from '../components/ChinaDataTable.vue'
@@ -134,6 +151,8 @@ export default {
   components: {
     [Grid.name]: Grid,
     [GridItem.name]: GridItem,
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
     ChinaMap,
     ChinaLine,
     ChinaTable,
@@ -149,7 +168,7 @@ h3 {
 
 .homeContainer {
   //margin-top: 46px;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
 
   .home_header {
     position: relative;
@@ -376,6 +395,26 @@ h3 {
           margin-right: 7px;
         }
       }
+    }
+  }
+
+  //冬季疫情预防
+  .swiper{
+    h3{
+      font-size: 20px;
+      color: #020202;
+      margin: 10px 0;
+      border-left: 5px solid red;
+      padding-left: 5px;
+    }
+
+    .my-swipe .van-swipe-item {
+      color: #fff;
+      font-size: 20px;
+      //height: 150px;
+      line-height: 150px;
+      text-align: center;
+      //background-color: #39a9ed;
     }
   }
 }
