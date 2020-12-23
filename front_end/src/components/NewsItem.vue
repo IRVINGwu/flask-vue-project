@@ -1,8 +1,8 @@
 <template>
   <div class="newsItem">
     <h3>{{ newsItem.title }}</h3>
-    <span>{{ newsItem.sounce }}</span><br>
-    <span>{{ newsItem.date }}</span>
+    <span>{{ newsItem.source }}</span><br>
+    <span>{{ newsItem.time }}</span>
     <div class="content" v-html="newsItem.content">
     </div>
   </div>

@@ -140,3 +140,9 @@ axios.defaults.baseURL = "http://192.168.0.107:8080";
 网上查了一下，果然会变化：
 
 ![image-20201222143942956](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20201222143942956.png)
+
+### 7.增加爬取新闻的功能
+
+因为新闻网页是下拉动态加载的，所以需要使用selenium来模拟动态加载，使用了`chromedriver.exe`来进行模拟。得到的结果是一个html的代码内容，需要使用`BeautifulSoup`来解析，并存储为文件。
+
+现阶段只能做到爬取后覆盖原文件进行存储，以后可以添加验证重复项来存储。

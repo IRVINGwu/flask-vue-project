@@ -14,3 +14,11 @@ Vue.filter('formatNumber',function(data){
     return ''
   }
 })
+
+Vue.filter('formatContent',function(data){
+  if(data === null ){
+    return '暂时未找到新闻内容'
+  }else{
+    return data.slice(3,20)
+  }
+})

@@ -138,14 +138,14 @@ class Response:
 
     # 获取新闻的总体数据，用于展示概括
     def getNews(self, orient='index'):
-        df = pd.read_csv('./static/news/news.csv')
+        df = pd.read_csv('./static/news/news_new.csv')
         # 将dataframe数据类型变为json类型，方便前端进行处理
         df_json = df.to_json(orient=orient, force_ascii=False)
         return json.loads(df_json)
 
     # 获取新闻的总体数据，用于展示概括
     def getNewsItem(self, id, orient='table'):
-        df = pd.read_csv('./static/news/news.csv')
+        df = pd.read_csv('./static/news/news_new.csv')
         data = df.loc[df['id'] == id, :]
         # 将dataframe数据类型变为json类型，方便前端进行处理
         df_json = data.to_json(orient=orient, force_ascii=False, index=False)

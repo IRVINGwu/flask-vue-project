@@ -100,7 +100,7 @@ export default {
           border-bottom: 1px solid #dee2e6;
         }
         td:nth-child(1){
-          font-size: 0.3rem;
+          font-size: 0.5rem;
           text-align: left;
         }
         td:nth-child(5){

@@ -52,6 +52,7 @@
         <ChinaMap></ChinaMap>
         <h3>中国疫情趋势图</h3>
         <ChinaLine></ChinaLine>
+        <p>注意：疫情趋势图数据来源于网易API，从2020-12-22日起，累计确诊数和累计治愈数都存在问题，正在联系网易进行修改。敬请谅解。</p>
         <h3>中国疫情详情</h3>
         <ChinaTable></ChinaTable>
         <p>数据来源：WHO及权威媒体</p>
@@ -400,6 +401,7 @@ h3 {
 
   //冬季疫情预防
   .swiper{
+    width: 100%;
     h3{
       font-size: 20px;
       color: #020202;
@@ -407,14 +409,24 @@ h3 {
       border-left: 5px solid red;
       padding-left: 5px;
     }
+    .my-swipe{
+      width: 100%;
+      padding: 10px;
+      overflow: hidden;
+    }
 
     .my-swipe .van-swipe-item {
       color: #fff;
       font-size: 20px;
+
       //height: 150px;
       line-height: 150px;
       text-align: center;
-      //background-color: #39a9ed;
+      //background-color: rgb(81, 122, 178);
+    }
+    img{
+      width: 100%;
+      //padding: 5px;
     }
   }
 }

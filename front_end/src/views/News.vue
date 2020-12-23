@@ -15,10 +15,10 @@
       <ul class="newslist">
         <li v-for="(item,index) in news" :key="item.id">
           <div class="news_item">
-            <span>{{ item.date }}</span>
+            <span>{{ item.time }}</span>
             <div class="item_content">
               <h4 class="title">{{ item.title }}</h4>
-              <div class="content">{{ item.content.slice(3,29) }}...
+              <div class="content">{{ item.content | formatContent }}...
               </div>
 <!--              <span @click="getNewsItem(item.id)"></span>-->
               <router-link :to="'/news/' + item.id" tag="span">查看详情&gt;&gt;&gt;</router-link>
