@@ -20,7 +20,7 @@ export default {
     async getNewsItem(id){
       // console.log(id)
       const body = await this.$http.get("/news/" + id)
-      if(body.status == 200){
+      if(body.status === 200){
         this.newsItem = body.data.data[0]
         // console.log(body.data.data[0])
       }

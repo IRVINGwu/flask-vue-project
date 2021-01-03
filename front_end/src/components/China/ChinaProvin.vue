@@ -17,7 +17,7 @@
         </thead>
         <tbody>
         <tr v-for="(item,index) in tablelist" :key="index">
-          <td>{{ item.name }}</td>
+          <td v-text="item.name === '未明确地区' ? id : item.name"></td>
           <td>{{ item.todayConfirm }}</td>
           <td>{{ item.totalConfirm }}</td>
           <td>{{ item.totalHeal }}</td>

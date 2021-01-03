@@ -6,18 +6,18 @@
         <th scope="col">国家</th>
         <th scope="col">现有确诊</th>
 <!--        <th scope="col">累计确诊</th>-->
-        <th scope="col">治愈</th>
-        <th scope="col">死亡</th>
+        <th scope="col">现有治愈</th>
+        <th scope="col">现有死亡</th>
         <th scope="col">疫情</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="(item,index) in tablelist" :key="item.id">
         <td>{{ item.name }}</td>
-        <td>{{ item.today.confirm }}</td>
+        <td>{{ item.todayConfirm }}</td>
 <!--        <td>{{item.total.confirm }}</td>-->
-        <td>{{item.total.heal}}</td>
-        <td>{{item.total.dead}}</td>
+        <td>{{item.todayHeal}}</td>
+        <td>{{item.todayDead}}</td>
         <router-link :to="'/world/' + item.name" tag="td">more</router-link>
       </tr>
       </tbody>
@@ -35,10 +35,40 @@ export default {
   methods: {
     async get_worldTable(){
       const body = await this.$http.get("/worldDaily")
-      if(body.status == 200){
-        this.tablelist = body.data
+      if(body.status === 200){
+        let table = body.data
+        // console.log(table)
+        for (let key in table) {
+          const obj = {
+            name: table[key].name,
+            todayConfirm: table[key].today.confirm === null ? 0 : +table[key].today.confirm,
+            todayHeal: table[key].today.heal === null ? 0 : +table[key].today.heal,
+            todayDead: table[key].today.dead === null ? 0 : +table[key].today.dead,
+          }
+          this.tablelist.push(obj)
+        }
         // console.log(body.data)
       }
+      // 数组排序后输出
+      // for (let i = 0; i < this.tablelist.length; i++) {
+      //   for (let j = i; j < this.tablelist.length; j++) {
+      //     // if(this.tablelist[i].todayConfirm == this.tablelist[j].todayConfirm){
+      //     //   console.log(this.tablelist[i])
+      //     // }
+      //     try{
+      //       if(this.tablelist[i].todayConfirm < this.tablelist[j+1].todayConfirm){
+      //         let temp = this.tablelist[i]
+      //         this.tablelist[i] = this.tablelist[j+1]
+      //         this.tablelist[j+1] = temp
+      //
+      //       }
+      //     }catch (err){
+      //       // console.log(err)
+      //     }
+      //   }
+      // }
+
+
     }
   },
   created() {},

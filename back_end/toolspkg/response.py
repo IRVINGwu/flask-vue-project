@@ -100,10 +100,18 @@ class Response:
 
     # 获取中国省份的当天数据，用在中国疫情概览中，可以用在表格中
     def getChinaProvinDailyData(self, orient='index'):
-        df = pd.read_csv('./static/data/daily_china_detail.csv')
-        # 将dataframe数据类型变为json类型，方便前端进行处理
-        df_json = df.to_json(orient=orient, force_ascii=False)
-        return json.loads(df_json)
+        r = requests.get(
+            'https://c.m.163.com/ug/api/wuhan/app/data/list-total',
+            headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit 537.36 (KHTML, like Gecko) Chrome"})
+
+        # 返回的数据r.json()是一个字典，需要转换为json
+        content = json.dumps(r.json(), ensure_ascii=False)
+        df = pd.read_json(content, orient='records')
+        # 因为筛选出来的数据是list类型，所以需要转换为json类型
+        df_json = df.loc['areaTree', 'data']
+        df_jso = json.dumps(df_json, ensure_ascii=False)
+        return df_jso
 
     # 获取中国省份的详细数据，是按日期排列的，用在省份详情中
 

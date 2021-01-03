@@ -45,7 +45,7 @@ export default {
     //获取制图所需要的数据
     async get_worldSum () {
       const body = await this.$http.get('/worldSum')
-      if (body.status == 200) {
+      if (body.status === 200) {
         // console.log(body.data.data)
         let result = body.data.data
         for (let i = 0; i < result.length; i++) {

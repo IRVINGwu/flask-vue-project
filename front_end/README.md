@@ -267,3 +267,9 @@ computed: {
 ## 使用VUE3.0+TYPESCRIPT来重写前端代码
 
 网易的API接口，直接在前端进行使用，使用axios来获取数据，axios(url:'',headers={}).then(res=>{})，上次不成功，是因为我已经定义了axios.baseURL="127.0.0.1"，所以在后面请求网易数据时，网址错了。都试过了，还是不能行，说是headers错误，也不知道是什么错误、怎么改，还是直接在后端运行吧。
+
+## 将懒加载应用到新闻页面
+
+vant的懒加载只适用于图片的懒加载，我需要的是新闻内容的懒加载，这里是vue官方的vue-lazyload文档：https://github.com/hilongjw/vue-lazyload。这里也是图片的懒加载。
+
+这里实现了数据的懒加载，但是很复杂，我想再看看有没有更好的方法。https://blog.csdn.net/chenxi_li/article/details/100173118?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control

@@ -13,12 +13,12 @@
       </thead>
       <tbody id="tbody">
       <tr v-for="(item,index) in tablelist" :key="item.id">
-        <td>{{ item.省份名 }}</td>
-        <td>{{ item.今日确诊 }}</td>
-        <td>{{ item.总确诊数 }}</td>
-        <td>{{ item.总治愈数 }}</td>
-        <td>{{ item.总死亡数 }}</td>
-        <router-link :to="'/' + item.省份名" tag="td">详情</router-link>
+        <td>{{ item.province }}</td>
+        <td>{{ item.todayConfirm }}</td>
+        <td>{{ item.totalConfirm }}</td>
+        <td>{{ item.totalHeal }}</td>
+        <td>{{ item.totalDead }}</td>
+        <router-link :to="'/' + item.province" tag="td">详情</router-link>
       </tr>
       </tbody>
     </table>
@@ -37,9 +37,19 @@ export default {
   methods: {
     async get_chinaTable () {
       const body = await this.$http.get('/chinaProvinceDaily')
-      if (body.status == 200) {
-        this.tablelist = body.data
-        // console.log(body.data)
+      if (body.status === 200) {
+        let table = body.data[2].children
+        // console.log(table)
+        for (let key in table) {
+          const obj = {
+            province: table[key].name,
+            todayConfirm: table[key].today.confirm,
+            totalConfirm: table[key].total.confirm,
+            totalHeal: table[key].total.heal,
+            totalDead: table[key].total.dead,
+          }
+          this.tablelist.push(obj)
+        }
       }
     },
     // fix_thead () {

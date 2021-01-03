@@ -34,21 +34,21 @@ const routes = [
     path: '/news/:id',
     name: 'NewsItem',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../components/NewsItem'),
+      import(/* webpackChunkName: "about" */ '../components/News/NewsItem'),
     props: true
   },
   {
     path: '/:id',
     name: 'ChinaProvince',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../components/ChinaProvin'),
+      import(/* webpackChunkName: "about" */ '../components/China/ChinaProvin'),
     props: true
   },
   {
     path: '/world/:id',
     name: 'WorldCountry',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../components/WorldCountry'),
+      import(/* webpackChunkName: "about" */ '../components/World/WorldCountry'),
     props: true
   },
 ]

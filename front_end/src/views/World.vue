@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import WorldLine from "../components/WorldDataLine.vue"
-import WorldTable from "../components/WorldDataTable.vue"
+import WorldLine from "../components/World/WorldDataLine.vue"
+import WorldTable from "../components/World/WorldDataTable.vue"
 import { Grid, GridItem } from "vant";
 
 export default {

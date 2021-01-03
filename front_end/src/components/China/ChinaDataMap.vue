@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import echarts from "../assets/js/echarts.min.js";
+import echarts from "../../assets/js/echarts.min.js";
 import { Button } from "vant";
 
 export default {
@@ -50,13 +50,14 @@ export default {
       // 获取疫情数据
       const body = await this.$http.get("/chinaProvinceDaily");
       // console.log(body.data)
-      this.msgFromSon = body.data[0].最新更新时间;
+      this.msgFromSon = body.data[0].lastUpdateTime;
       // 创建dataMap
       let dataMap = [];
       // 因为body.data的类型是对象，所以要用循环对象的方法来做
-      for (let key in body.data) {
-        let name = body.data[key].省份名;
-        let num = body.data[key].今日确诊;
+      let table = body.data[2].children
+      for (let key in table) {
+        let name = table[key].name;
+        let num = table[key].today.confirm;
         let obj = {
           name: name,
           value: num,
@@ -162,9 +163,10 @@ export default {
       // 创建dataMap
       let dataMap = [];
       // 因为body.data的类型是对象，所以要用循环对象的方法来做
-      for (let key in body.data) {
-        let name = body.data[key].省份名;
-        let num = body.data[key].总确诊数;
+      let table = body.data[2].children
+      for (let key in table) {
+        let name = table[key].name;
+        let num = table[key].total.confirm;
         let obj = {
           name: name,
           value: num,

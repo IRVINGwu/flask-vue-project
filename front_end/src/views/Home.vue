@@ -50,9 +50,11 @@
       <div class="data_country">
         <h3>中国疫情地图</h3>
         <ChinaMap></ChinaMap>
+        <h3>今日疫情详情</h3>
+        <ChinaDetailTable></ChinaDetailTable>
         <h3>中国疫情趋势图</h3>
         <ChinaLine></ChinaLine>
-        <p>注意：疫情趋势图数据来源于网易API，从2020-12-22日起，累计确诊数和累计治愈数都存在问题，正在联系网易进行修改。敬请谅解。</p>
+        <p>注意：疫情趋势图数据来源于网易，若数据未及时更新，敬请谅解。</p>
         <h3>中国疫情详情</h3>
         <ChinaTable></ChinaTable>
         <p>数据来源：WHO及权威媒体</p>
@@ -121,9 +123,10 @@
 
 <script>
 import {Grid, GridItem, Swipe, SwipeItem} from 'vant'
-import ChinaMap from '../components/ChinaDataMap.vue'
-import ChinaLine from '../components/ChinaDataLine.vue'
-import ChinaTable from '../components/ChinaDataTable.vue'
+import ChinaMap from '../components/China/ChinaDataMap.vue'
+import ChinaLine from '../components/China/ChinaDataLine.vue'
+import ChinaTable from '../components/China/ChinaDataTable.vue'
+import ChinaDetailTable from '@/components/China/ChinaDetailTable'
 
 export default {
   data () {
@@ -157,6 +160,7 @@ export default {
     ChinaMap,
     ChinaLine,
     ChinaTable,
+    ChinaDetailTable,
   },
 }
 </script>

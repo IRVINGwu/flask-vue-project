@@ -13,6 +13,8 @@
       <h3>疫情追踪<span></span></h3>
 <!--      疫情列表-->
       <ul class="newslist">
+<!--        TODO:这里要实现懒加载,使用vant的懒加载后没有效果,再试一试-->
+        <lazy-component>
         <li v-for="(item,index) in news" :key="item.id">
           <div class="news_item">
             <span>{{ item.time }}</span>
@@ -25,6 +27,7 @@
             </div>
           </div>
         </li>
+        </lazy-component>
       </ul>
     </div>
   </div>

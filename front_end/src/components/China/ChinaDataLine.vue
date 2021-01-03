@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import echarts from "../assets/js/echarts.min.js";
+import echarts from "../../assets/js/echarts.min.js";
 import { Tab, Tabs } from "vant";
 
 export default {
@@ -72,7 +72,7 @@ export default {
     //获取制图所需要的数据
     async get_chinaSum(){
       const body = await this.$http.get('/chinaSum')
-      if(body.status == 200){
+      if(body.status === 200){
         // console.log(body.data)
         let result = body.data
         for (let i = 0; i < result.length; i++) {
