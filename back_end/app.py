@@ -67,7 +67,7 @@ def get_worldDailyData(country):
     response = Response().getWorldSingleData(country)
     return response
 
-# 发送世界的详情数据，用于展示世界疫情发展趋势，线形图
+# 发送世界的详情数据，用于展示世界疫情数字
 
 
 @app.route('/worldDaily', methods=['GET'])
@@ -119,7 +119,7 @@ def get_chinaCity(name):
 # 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
 if __name__ == '__main__':
     app.run(
-        host='192.168.0.107',
+        host='192.168.0.109',
         port=8080,
         debug=True
     )

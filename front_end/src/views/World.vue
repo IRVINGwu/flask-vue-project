@@ -14,17 +14,32 @@
       <div class="data_country_daily">
         <h3>世界疫情数据</h3>
         <van-grid :column-num="3" :gutter="6" class="vanGrid" :border="true">
+          <van-grid-item icon="photo-o" text="文字" class="van-grid-item_1"><span>现有确诊</span><span
+            class="number_1" v-cloak>{{ worldTodayConfirm }}</span><span>较上日:<span
+            class="number_1" v-cloak>{{ worldTodayConfirm | formatNumber }}</span></span></van-grid-item>
+
+          <van-grid-item icon="photo-o" text="文字" class="van-grid-item_2"><span>今日治愈</span><span
+            class="number_2" v-cloak>{{ worldTodayHeal }}</span><span>较上日:<span class="number_2" v-cloak>{{
+              worldTodayHeal | formatNumber
+            }}</span></span></van-grid-item>
+
+          <van-grid-item icon="photo-o" text="文字" class="van-grid-item_3"><span>今日死亡</span><span
+            class="number_3" v-cloak>{{ worldTodayDead }}</span><span>较上日:<span
+            class="number_3" v-cloak>{{ worldTodayDead | formatNumber }}</span></span></van-grid-item>
+
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_4"
           ><span>累计确诊</span><span class="number_4">{{ totalConfirm }}</span
-          ><span>较上日:<span class="number_4">{{ todayConfirm | formatNumber}}</span></span
+          ><span>较上日:<span class="number_4">{{ worldTodayConfirm | formatNumber}}</span></span
           ></van-grid-item>
+
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_5"
           ><span>累计治愈</span><span class="number_5">{{ totalHeal }}</span
-          ><span>较上日:<span class="number_5">{{ todayHeal | formatNumber}}</span></span
+          ><span>较上日:<span class="number_5">{{ worldTodayHeal | formatNumber}}</span></span
           ></van-grid-item>
+
           <van-grid-item icon="photo-o" text="文字" class="van-grid-item_6"
           ><span>累计死亡</span><span class="number_6">{{ totalDead }}</span
-          ><span>较上日:<span class="number_6">{{ todayDead | formatNumber}}</span></span
+          ><span>较上日:<span class="number_6">{{ worldTodayDead | formatNumber}}</span></span
           ></van-grid-item>
         </van-grid>
         <h4>统计截止至:{{ date }}</h4>
@@ -49,29 +64,30 @@ import { Grid, GridItem } from "vant";
 export default {
   data(){
     return{
-      todayConfirm:'',
-      todayDead:'',
-      todayHeal:'',
-      totalConfirm:'',
-      totalDead:'',
-      totalHeal:'',
+      worldTodayConfirm:0,
+      worldTodayDead:0,
+      worldTodayHeal:0,
+      totalConfirm:0,
+      totalDead:0,
+      totalHeal:0,
       date:''
     }
   },
   methods:{
     async get_worldData(){
-      const body = await this.$http.get('/worldSum')
-      if(body.status == 200){
-        let lastData = body.data.data.slice(-1)[0]
-        let secondLastData = body.data.data.slice(-2,-1)[0]
-        // console.log(secondLastData.date)
-        this.date = lastData.date.slice(0,10)
-        this.totalConfirm = lastData.确诊病例
-        this.totalDead = lastData.死亡病例
-        this.totalHeal = lastData.康复病例
-        this.todayConfirm  = lastData.确诊病例 - secondLastData.确诊病例
-        this.todayDead = lastData.死亡病例 - secondLastData.死亡病例
-        this.todayHeal = lastData.康复病例 - secondLastData.康复病例
+      const body = await this.$http.get('/worldDaily')
+      if(body.status === 200){
+        // console.log(body.data)
+        let arr = body.data
+        for (let i = 0; i < arr.length; i++) {
+          this.worldTodayConfirm += arr[i].today.confirm == null ? 0 : parseInt(arr[i].today.confirm)
+          this.worldTodayDead += arr[i].today.dead == null ? 0 : parseInt(arr[i].today.dead)
+          this.worldTodayHeal += arr[i].today.heal == null ? 0 : parseInt(arr[i].today.heal)
+          this.totalConfirm += arr[i].total.confirm == null ? 0 : parseInt(arr[i].total.confirm)
+          this.totalDead += arr[i].total.dead == null ? 0 : parseInt(arr[i].total.dead)
+          this.totalHeal += arr[i].total.heal == null ? 0 : parseInt(arr[i].total.heal)
+          this.date = arr[i].lastUpdateTime
+        }
       }
     }
   },
