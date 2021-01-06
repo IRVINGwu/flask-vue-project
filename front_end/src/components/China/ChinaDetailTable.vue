@@ -56,28 +56,18 @@ export default {
             }
           }
         }
-        console.log(this.tablelist)
+        // console.log(this.tablelist)
+        for (let i = 0; i < this.tablelist.length; i++) {
+          for (let j = i; j < this.tablelist; j++) {
+            if(+this.tablelist[i].todayConfirm < +this.tablelist[j+1].todayConfirm){
+              let temp = this.tablelist[i]
+              this.tablelist[i] = this.tablelist[j+1]
+              this.tablelist[j+1] = temp
+            }
+          }
+        }
       }
     },
-    // fix_thead () {
-    //   window.onscroll = function () {
-    //     let toTop = document.querySelector('#thead')
-    //     let tr = document.querySelector("#tr")
-    //
-    //     let clonedNode = tr.cloneNode(true); // 克隆节点
-    //     clonedNode.setAttribute("id", "tr1"); // 修改一下id 值，避免id 重复
-    //
-    //     if (document.documentElement.scrollTop >= 1339) {
-    //       toTop.appendChild(clonedNode)
-    //       clonedNode.style.position = 'fixed'
-    //       clonedNode.style.top = '0'
-    //       clonedNode.style.zIndex = '999'
-    //       // clonedNode.style.width = '100%'
-    //     } else if(document.documentElement.scrollTop < 1339){
-    //       clonedNode.style.display = 'none'
-    //     }
-    //   }
-    // }
   },
   created () {
   },

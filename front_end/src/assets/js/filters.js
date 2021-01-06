@@ -11,7 +11,7 @@ Vue.filter('formatNumber',function(data){
   }else if(data > 0){
     return '+' + data
   }else{
-    return ''
+    return '+0'
   }
 })
 

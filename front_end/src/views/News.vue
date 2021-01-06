@@ -1,77 +1,140 @@
 <template>
   <div class="news_container">
     <div class="news_header">
-      <img src="../assets/images/news_banner.png" alt="" />
+      <img src="../assets/images/news_banner.png" alt=""/>
       <div class="header_content">
         <span>同心合力 抗击疫情</span>
         <span>covid-19疫情最新进展</span>
       </div>
     </div>
 
-<!--    疫情新闻内容-->
+    <!--    疫情新闻内容-->
     <div class="news_content">
       <h3>疫情追踪<span></span></h3>
-<!--      疫情列表-->
+      <!--      疫情列表-->
       <ul class="newslist">
-<!--        TODO:这里要实现懒加载,使用vant的懒加载后没有效果,再试一试-->
-        <lazy-component>
-        <li v-for="(item,index) in news" :key="item.id">
+        <li v-for="(item,index) in newsContent" :key="item.id">
           <div class="news_item">
             <span>{{ item.time }}</span>
             <div class="item_content">
               <h4 class="title">{{ item.title }}</h4>
               <div class="content">{{ item.content | formatContent }}...
               </div>
-<!--              <span @click="getNewsItem(item.id)"></span>-->
+              <!--              <span @click="getNewsItem(item.id)"></span>-->
               <router-link :to="'/news/' + item.id" tag="span">查看详情&gt;&gt;&gt;</router-link>
             </div>
           </div>
         </li>
-        </lazy-component>
       </ul>
+<!--      当新闻拉取完之后,提示没有更多内容了-->
+      <van-divider v-if="flag">没有更多内容了!</van-divider>
     </div>
   </div>
 </template>
 
 <script>
+import { Divider } from "vant"
+
 export default {
-  data(){
-    return{
-      news:''
+  data () {
+    return {
+      news: [],
+      newsContent: [],
+      newsLen: 10,
+      flag:false,
     }
   },
-  methods:{
-    async getNews(){
-      const body = await this.$http.get("/news")
-      if(body.status == 200){
-        this.news = body.data
+  methods: {
+    async getNews () {
+      const body = await this.$http.get('/news')
+      if (body.status == 200) {
+        // body.data传递过来的是伪数组,使用循环赋值的方法获取到真数组
+        // this.news = body.data
+        for (let key in body.data) {
+          this.news.push(body.data[key])
+        }
       }
+      // console.log(typeof this.news) //object
+      // 下拉加载可以这样做,指定一个news用来接收所有的数据,但是初始化的newsContent只截取前10个数据,
+      // v-for循环的是newsContent,那么在我下拉的时候,每次加10条数据到newsContent里面,直到最后可能没有
+      // 10条数据了,加个判断即可,加载完了就显示"已经到底了".
       // console.log(this.news)
+      // if(this.news)
+      // for (let i = 0; i < this.newsLen; i++) {
+      //   this.newsContent.push(this.news[i])
+      // }
+      this.newsContent = this.news.slice(0,this.newsLen)
     },
-    // async getNewsItem(id){
-    //   // 父组件向子组件传递参数
-    //   return
-    // }
+    //实现上拉加载
+    // 获取滚动条当前的位置
+    getScrollTop () {
+      let scrollTop = 0
+      if (document.documentElement && document.documentElement.scrollTop) {
+        scrollTop = document.documentElement.scrollTop
+      } else if (document.body) {
+        scrollTop = document.body.scrollTop
+      }
+      return scrollTop
+    },
+    // 获取当前可视范围的高度
+    getClientHeight () {
+      let clientHeight = 0
+      if (document.body.clientHeight && document.documentElement.clientHeight) {
+        clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight)
+      } else {
+        clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
+      }
+      return clientHeight
+    },
+    // 获取文档完整的高度
+    getScrollHeight () {
+      return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+    },
+    // 滚动事件触发下拉加载
+    onScroll () {
+      if (this.getScrollHeight() - this.getClientHeight() - this.getScrollTop() <= 0) {
+        //如果请求次数大于5次,就不再请求,而是输出"没有更多内容了."
+        // console.log(this.news.length)
+        if(this.newsContent.length < this.news.length){
+          this.newsLen += 10
+          this.newsContent = []
+          for (let i = 0; i < this.newsLen; i++) {
+            this.newsContent.push(this.news[i])
+          }
+        }else if(this.newsContent.length >= this.news.length){
+          // console.log('没有更多内容了!!!')
+          // this.$toast('没有更多内容了!!!')
+          this.flag = true
+        }
+      }
+    },
   },
   mounted () {
-    this.getNews()
+    this.getNews();
+    this.$nextTick(function () {
+      window.addEventListener('scroll', this.onScroll)
+    })
   },
-  components:{
+  components: {
+    [Divider.name]:Divider,
   }
-};
+}
 </script>
 
 <style lang="scss">
 .news_container {
   //margin-top: 46px;
   margin-bottom: 35px;
+
   .news_header {
     position: relative;
     background-color: rgb(0, 86, 238);
+
     img {
       width: 100%;
       height: 150px;
     }
+
     .header_content {
       position: absolute;
       width: 100%;
@@ -83,25 +146,28 @@ export default {
       font-size: 24px;
       color: white;
       text-align: center;
-      span:nth-child(2){
+
+      span:nth-child(2) {
         font-size: 28px;
         font-style: italic;
       }
     }
   }
 
-  .news_content{
+  .news_content {
     padding: 15px;
-    h3{
+
+    h3 {
       position: relative;
       font-size: 20px;
       font-weight: bold;
-      margin: 10px 0 ;
+      margin: 10px 0;
       border-left: 5px solid red;
       padding-left: 5px;
       height: 30px;
       line-height: 30px;
-      span{
+
+      span {
         position: absolute;
         display: inline-block;
         width: 106px;
@@ -112,47 +178,54 @@ export default {
         top: 0;
       }
     }
-    ul{
+
+    ul {
       list-style: none;
       //padding-left: 10px;
-      li{
+      li {
         position: relative;
-        border-left:1px solid #ddd;
+        border-left: 1px solid #ddd;
         width: 100%;
         height: 188px;
         padding-left: 15px;
-        .news_item{
+
+        .news_item {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
 
-          span{
+          span {
             font-size: 16px;
             color: rgb(115, 115, 160);
             margin-top: -7px;
           }
-          .item_content{
+
+          .item_content {
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 5px;
             background-color: rgb(248, 248, 248);
             margin-top: 15px;
-            h4{
+
+            h4 {
               font-size: 16px;
             }
-            .content{
+
+            .content {
               margin: 0 0 5px 0;
               font-size: 15px;
               color: rgb(123, 117, 120);
             }
-            span{
+
+            span {
               font-size: 15px;
               color: rgb(123, 117, 120);
             }
           }
         }
       }
-      li::before{
+
+      li::before {
         content: ".";
         font-size: 0;
         line-height: 0;

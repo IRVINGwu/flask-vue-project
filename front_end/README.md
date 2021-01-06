@@ -273,3 +273,5 @@ computed: {
 vant的懒加载只适用于图片的懒加载，我需要的是新闻内容的懒加载，这里是vue官方的vue-lazyload文档：https://github.com/hilongjw/vue-lazyload。这里也是图片的懒加载。
 
 这里实现了数据的懒加载，但是很复杂，我想再看看有没有更好的方法。https://blog.csdn.net/chenxi_li/article/details/100173118?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control
+
+## echarts表格最好放在一个单独的vue组件里面,并且组件里面不要放别的数据请求的东西,否则会报错.
