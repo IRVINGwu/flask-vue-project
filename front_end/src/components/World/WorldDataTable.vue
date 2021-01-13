@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     async get_worldTable(){
-      const body = await this.$http.get("/worldDaily")
+      const body = await this.$http.get("/api/worldDaily")
       if(body.status === 200){
         let table = body.data
         // console.log(table)

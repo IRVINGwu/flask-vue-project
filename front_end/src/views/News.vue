@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     async getNews () {
-      const body = await this.$http.get('/news')
+      const body = await this.$http.get('/api/news')
       if (body.status == 200) {
         // body.data传递过来的是伪数组,使用循环赋值的方法获取到真数组
         // this.news = body.data

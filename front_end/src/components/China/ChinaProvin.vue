@@ -43,11 +43,11 @@ export default {
     // 获取数据来做地图和表格
     async get_Data () {
       // 获取地图所需的json数据
-      const result = await this.$http.get('/mapJson/' + this.id)
+      const result = await this.$http.get('/api/mapJson/' + this.id)
       echarts.registerMap(this.id, result.data)
       // console.log(result.data)
       // 获取疫情数据
-      const body = await this.$http.get('/chinaProvinCity/' + this.id)
+      const body = await this.$http.get('/api/chinaProvinCity/' + this.id)
       // console.log(body.data)
 
 

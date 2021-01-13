@@ -1,24 +1,20 @@
 <template>
   <div class="china_map_container">
     <div class="map">
-      <transition>
+      <transition name="slide">
         <!-- 中国疫情现有确诊热力图 -->
         <div id="container_daily" class="china_map" v-show="mapShow"></div>
       </transition>
-      <transition>
-        <!-- 中国疫情累计确诊热力图 -->
-        <div id="container_sum" class="china_map" v-show="!mapShow">nihao</div>
+      <transition name="slide">
+<!--         中国疫情累计确诊热力图-->
+        <div id="container_sum" class="china_map" v-show="!mapShow"></div>
       </transition>
     </div>
 
     <!-- 两个按钮用于切换显示热力图 -->
     <div class="map_button">
-      <van-button plain type="primary" class="button_item" @click="showDaily"
-        >现有确诊
-      </van-button>
-      <van-button plain type="primary" class="button_item" @click="showSum"
-        >累计确诊
-      </van-button>
+      <van-button plain type="primary" :class="['button_item',mapShow === true ? 'button_active': '']" @click="showDaily">现有确诊</van-button>
+      <van-button plain type="primary" :class="['button_item',mapShow === false ? 'button_active': '']" @click="showSum">累计确诊</van-button>
     </div>
   </div>
 </template>
@@ -44,11 +40,11 @@ export default {
     //今日确诊热力图
     async creatDailyChart() {
       // 获取地图所需的json数据
-      const result = await this.$http.get("/mapJson/china");
+      const result = await this.$http.get("/api/mapJson/china");
       echarts.registerMap("china", result.data);
       // console.log(result.data)
       // 获取疫情数据
-      const body = await this.$http.get("/chinaProvinceDaily");
+      const body = await this.$http.get("/api/chinaProvinceDaily");
       // console.log(body.data)
       this.msgFromSon = body.data[0].lastUpdateTime;
       // 创建dataMap
@@ -154,11 +150,11 @@ export default {
     },
     async getSumChart() {
       // 获取地图所需的json数据
-      const result = await this.$http.get("/mapJson/china");
+      const result = await this.$http.get("/api/mapJson/china");
       echarts.registerMap("china", result.data);
       // console.log(result.data)
       // 获取疫情数据
-      const body = await this.$http.get("/chinaProvinceDaily");
+      const body = await this.$http.get("/api/chinaProvinceDaily");
       // console.log(body.data)
       // 创建dataMap
       let dataMap = [];
@@ -298,19 +294,19 @@ export default {
       border: 1px solid #ccc;
     }
 
-    .v-enter {
+    .slide-enter {
       opacity: 0;
       transform: translateX(100%);
     }
 
-    .v-leave-to {
+    .slide-leave-to {
       opacity: 0;
       transform: translateX(-100%);
     }
 
-    .v-enter-active,
-    .v-leave-active {
-      transition: all 0.5s ease;
+    .slide-enter-active,
+    .slide-leave-active {
+      transition: all 0.3s ease;
     }
   }
 
@@ -327,13 +323,15 @@ export default {
       flex: 1;
       border-radius: 5px;
       border: 1px solid rgb(210, 210, 210);
+      text-align: center;
       font-size: 16px;
       color: rgb(72, 70, 71);
     }
 
     .button_active {
-      border-color: red;
-      color: red;
+      background-color: #e53535;
+      color: white;
+
     }
   }
 }

@@ -2,6 +2,7 @@ import pandas as pd
 import time
 import requests
 import json
+import numpy as np
 
 
 class CleanData:
@@ -272,15 +273,30 @@ class CleanData:
             index=False)
 
 
+class dealData:
+    def __init__(self):
+        pass
+
+    def dealWorldData(self, orient='table'):
+        df = pd.read_csv('../static/data/world_all.csv')
+
+        # 这一步是用pandas的to_datetime方法，将日期这一列的数据变成pandas可以处理的格式
+        df['date'] = pd.to_datetime(df['日期'])
+        data = df.groupby('date').agg(
+            {"确诊病例": np.sum, "死亡病例": np.sum, "康复病例": np.sum})
+        data.to_csv('../static/data/world_sum_dayline.csv')
+
 if __name__ == '__main__':
     # 实例化一个对象
     cleanData = CleanData()
+    dealData = dealData()
     start = time.time()
     try:
         cleanData.getNum()
         cleanData.combineNum()
         cleanData.translateToChinese()
         cleanData.getApiData()
+        dealData.dealWorldData()
     except BaseException:
         print('不成功哦！')
     end = time.time()

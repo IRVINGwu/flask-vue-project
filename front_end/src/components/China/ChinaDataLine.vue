@@ -71,7 +71,7 @@ export default {
 
     //获取制图所需要的数据
     async get_chinaSum(){
-      const body = await this.$http.get('/chinaSum')
+      const body = await this.$http.get('/api/chinaSum')
       if(body.status === 200){
         // console.log(body.data)
         let result = body.data

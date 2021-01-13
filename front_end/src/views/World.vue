@@ -75,7 +75,7 @@ export default {
   },
   methods:{
     async get_worldData(){
-      const body = await this.$http.get('/worldDaily')
+      const body = await this.$http.get('/api/worldDaily')
       if(body.status === 200){
         // console.log(body.data)
         let arr = body.data

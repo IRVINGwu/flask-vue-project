@@ -9,6 +9,13 @@
     <div id="country_line" class="line" style="width: 100%;height: 400px;">
     </div>
 
+    <h3>{{ id }}疫情预测</h3>
+    <div class="country_predict">
+      <p class="predict1">是否担心疫情遥遥无期？您可以查看疫情预测图，看看疫情拐点是否到来。</p>
+      <p class="predict2">注意：预测基于当前日期之前的30天疫情数据模拟生成，仅供参考！！！</p>
+      <router-link :to="'/world/predict/' + id" tag="span" class="predict3">点击查看预测</router-link>
+    </div>
+
     <h3>{{ id }}疫情详情</h3>
     <h5 v-if="flag">抱歉,暂未提供本地区疫情详情,敬请谅解!</h5>
     <div id="country_table" class="table">
@@ -58,20 +65,8 @@ export default {
       if(this.id == '日本本土'){
         this.id = '日本'
       }
-      const body = await this.$http.get('/worldDailyData/' + this.id)
+      const body = await this.$http.get('/api/worldDailyData/' + this.id)
 
-      // TODO:加了具体数字的显示之后,echarts图显示不出来了,不知道是什么原因,如果实在不行的话,就不加了
-      // const body1 = await this.$http.get('/worldDaily')
-      // if (body1.status === 200) {
-      //   let table = body1.data
-      //   // console.log(table)
-      //   for (let key in table) {
-      //     if (table[key].name == this.id) {
-      //       // console.log(typeof table[key])
-      //       this.todayNum = table[key]
-      //     }
-      //   }
-      // }
       if (body == '详情暂时未找到') {
         let myChart = document.getElementById('country_line')
         myChart.innerHTML = '不好意思，本地区暂未提供疫情趋势图'
@@ -222,6 +217,34 @@ export default {
     font-size: 16px;
     color:darkred;
     margin: 10px 5px;
+  }
+
+  //疫情预测
+  .country_predict{
+    //text-align: center;
+    .predict1{
+      font-size: 16px;
+      color: #020202;
+    }
+    .predict2{
+      font-size: 14px;
+      color: #646566;
+      margin-top: -10px;
+    }
+    .predict3{
+      display: inline-block;
+      width: 50%;
+      height: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 40px;
+      border: 1px solid rgb(7, 193, 96);
+      border-radius: 5px;
+      background-color: rgb(7, 193, 96);
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
   //疫情数据表格

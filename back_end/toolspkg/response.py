@@ -15,14 +15,16 @@ class Response:
     '''
     # 获取各个国家的预测数据
 
-    # TODO:将所有的api接口做好，并且调试清楚
-    def getPredictData(self, request_name, orient='split'):
+    def getPredictData(self, request_name):
         df = pd.read_csv("./static/data/predict.csv")
-        d = df.loc[df['国家名'] == str(request_name), :]
-        # 数据有37天的，只取30天的数据用于展示
-        data = d[['日期', '确诊病例', '预测病例']].iloc[-30:, :]
-        df_json = data.to_json(orient=orient, force_ascii=False)
-        return json.loads(df_json)
+        try:
+            d = df.loc[df['国家名'] == str(request_name), :]
+            # 数据有37天的，只取30天的数据用于展示
+            data = d[['日期', '确诊病例', '预测病例']].iloc[-30:, :]
+            df_json = data.to_json(orient='index', force_ascii=False)
+            return json.loads(df_json)
+        except BaseException:
+            return '暂未提供预测数据'
 
     # 获取单个国家的数据，用在单个国家详情中
     def getWorldSingleData(self, request_name, orient='index'):
@@ -38,13 +40,8 @@ class Response:
 
     # 获取世界按天排列的总数据，用于展示线形图
     def getWorldSum(self, orient='table'):
-        df = pd.read_csv('./static/data/world_all.csv')
-
-        # 这一步是用pandas的to_datetime方法，将日期这一列的数据变成pandas可以处理的格式
-        df['date'] = pd.to_datetime(df['日期'])
-        data = df.groupby('date').agg(
-            {"确诊病例": np.sum, "死亡病例": np.sum, "康复病例": np.sum})
-        df_json = data.to_json(orient=orient, force_ascii=False)
+        df = pd.read_csv('./static/data/world_sum_dayline.csv')
+        df_json = df.to_json(orient=orient, force_ascii=False)
         return json.loads(df_json)
 
     # 获取世界当天的疫情数据，用于展示tablelist
@@ -177,6 +174,8 @@ class Response:
             path = './static/mapJson/xianggang.json'
         elif name == '台湾':
             path = './static/mapJson/taiwan.json'
+        elif name == '西藏':
+            path = './static/mapJson/xizang.json'
         else:
             try:
                 # 查询数据真是需要好好学啊

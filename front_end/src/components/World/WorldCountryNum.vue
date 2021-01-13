@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async get_numList () {
-      const body = await this.$http.get('/worldDaily')
+      const body = await this.$http.get('/api/worldDaily')
       if (body.status === 200) {
         let table = body.data
         // console.log(table)
@@ -103,7 +103,7 @@ export default {
       }
 
       :nth-child(2) {
-        font-size: 24px;
+        font-size: 20px;
       }
 
       //:nth-child(3) {

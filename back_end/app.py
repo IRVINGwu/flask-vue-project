@@ -19,7 +19,7 @@ def hello_world():
 # 传送谣言数据到前端
 
 
-@app.route('/rumors', methods=['GET'])
+@app.route('/api/rumors', methods=['GET'])
 def get_rumors():
     response = Response().getRumors()
     return response
@@ -27,7 +27,7 @@ def get_rumors():
 # 传送新闻数据到前端
 
 
-@app.route('/news', methods=['GET'])
+@app.route('/api/news', methods=['GET'])
 def get_news():
     response = Response().getNews()
     return response
@@ -35,7 +35,7 @@ def get_news():
 # 传送新闻详情到前端
 
 
-@app.route('/news/<number>', methods=['GET'])
+@app.route('/api/news/<number>', methods=['GET'])
 def get_news_item(number):
     number = eval(number)
     response = Response().getNewsItem(number)
@@ -45,7 +45,7 @@ def get_news_item(number):
 # 传送地图所需要的json数据到前端
 
 
-@app.route('/mapJson/<name>', methods=['Get'])
+@app.route('/api/mapJson/<name>', methods=['GET'])
 def get_mapJson(name):
     name1 = str(name)
     response = Response().getMapJson(name1)
@@ -53,7 +53,7 @@ def get_mapJson(name):
 
 
 # 发送中国各个省份数据到前端，用于展示每个省份的具体情况
-@app.route('/chinaProvinceDaily', methods=['GET'])
+@app.route('/api/chinaProvinceDaily', methods=['GET'])
 def get_chinaProvinceDaily():
     response = Response().getChinaProvinDailyData()
     return response
@@ -62,7 +62,7 @@ def get_chinaProvinceDaily():
 # 发送各个国家详情数据，用于展示每个国家的具体情况
 
 
-@app.route('/worldDailyData/<country>', methods=['GET'])
+@app.route('/api/worldDailyData/<country>', methods=['GET'])
 def get_worldDailyData(country):
     response = Response().getWorldSingleData(country)
     return response
@@ -70,7 +70,7 @@ def get_worldDailyData(country):
 # 发送世界的详情数据，用于展示世界疫情数字
 
 
-@app.route('/worldDaily', methods=['GET'])
+@app.route('/api/worldDaily', methods=['GET'])
 def get_worldDaily():
     response = Response().getWorldDaily()
     return response
@@ -78,7 +78,7 @@ def get_worldDaily():
 # 发送世界的详情数据，用于展示世界疫情发展趋势，线形图
 
 
-@app.route('/worldSum', methods=['GET'])
+@app.route('/api/worldSum', methods=['GET'])
 def get_worldSum():
     response = Response().getWorldSum()
     return response
@@ -86,7 +86,7 @@ def get_worldSum():
 # 发送中国当天数据到前端，用于展示地图
 
 
-@app.route('/chinaDaily', methods=['GET'])
+@app.route('/api/chinaDaily', methods=['GET'])
 def get_chinaDaily():
     response = Response().getChinaDaily()
     return response
@@ -94,7 +94,7 @@ def get_chinaDaily():
 # 发送中国当天数据到前端，用于展示按日期排列的线形图
 
 
-@app.route('/chinaSum', methods=['GET'])
+@app.route('/api/chinaSum', methods=['GET'])
 def get_chinaSum():
     response = Response().getChinaSum()
     return response
@@ -102,7 +102,7 @@ def get_chinaSum():
 # 发送中国当天数据到前端，用于展示线形图
 
 
-@app.route('/chinaProvince/<name>', methods=['Get'])
+@app.route('/api/chinaProvince/<name>', methods=['GET'])
 def get_chinaProvince(name):
     response = Response().getChinaProvinceData(name)
     return response
@@ -110,16 +110,23 @@ def get_chinaProvince(name):
 # 发送中国省份的城市当天数据到前端，用于展示地图和table表格
 
 
-@app.route('/chinaProvinCity/<name>', methods=['Get'])
+@app.route('/api/chinaProvinCity/<name>', methods=['GET'])
 def get_chinaCity(name):
     response = Response().getChinaCityData(name)
+    return response
+
+
+# 传送疫情预测数据到前端
+@app.route('/api/worldpredict/<name>', methods=['GET'])
+def get_worldPredict(name):
+    response = Response().getPredictData(name)
     return response
 
 
 # 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
 if __name__ == '__main__':
     app.run(
-        host='192.168.0.109',
+        host='192.168.10.24',
         port=8080,
         debug=True
     )

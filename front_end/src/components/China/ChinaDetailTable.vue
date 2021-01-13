@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     async get_chinaTable () {
-      const body = await this.$http.get('/chinaProvinceDaily')
+      const body = await this.$http.get('/api/chinaProvinceDaily')
       if (body.status === 200) {
         let table = body.data[2].children
         // console.log(typeof table)

@@ -275,3 +275,11 @@ vant的懒加载只适用于图片的懒加载，我需要的是新闻内容的�
 这里实现了数据的懒加载，但是很复杂，我想再看看有没有更好的方法。https://blog.csdn.net/chenxi_li/article/details/100173118?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control
 
 ## echarts表格最好放在一个单独的vue组件里面,并且组件里面不要放别的数据请求的东西,否则会报错.
+
+## 疫情地图的动画切换第一次点击没有效果
+
+我设置的是对的，但是当我第一次点击的时候，是没有动画效果的，所以我查了一下，为transition并且加了name属性，然后为CSS样式里面的动画名称加了name，这样就好了。
+
+![image-20210113150853562](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20210113150853562.png)
+
+![image-20210113150950267](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20210113150950267.png)

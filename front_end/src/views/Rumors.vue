@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     async getRumors(){
-      const body = await this.$http.get("/rumors")
+      const body = await this.$http.get("/api/rumors")
       if(body.status == 200){
         this.result = body.data
       }

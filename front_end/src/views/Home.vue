@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     async get_chinaData () {
-      const body = await this.$http.get('/chinaDaily')
+      const body = await this.$http.get('/api/chinaDaily')
       if (body.status == 200) {
         this.chinaDataToday = body.data.data.chinaTotal.today
         this.chinaDataTotal = body.data.data.chinaTotal.total

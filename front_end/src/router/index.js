@@ -51,6 +51,13 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../components/World/WorldCountry'),
     props: true
   },
+  {
+    path: '/world/predict/:id',
+    name: 'WorldPredict',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../components/World/WorldPredict'),
+    props: true
+  },
 ]
 const router = new VueRouter({
   routes,

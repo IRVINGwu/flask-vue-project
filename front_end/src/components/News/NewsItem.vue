@@ -19,7 +19,7 @@ export default {
   methods:{
     async getNewsItem(id){
       // console.log(id)
-      const body = await this.$http.get("/news/" + id)
+      const body = await this.$http.get("/api/news/" + id)
       if(body.status === 200){
         this.newsItem = body.data.data[0]
         // console.log(body.data.data[0])
