@@ -3,6 +3,7 @@
     <div id="line1" class="line" style="width: 100%;height: 400px;"></div>
     <div id="line2" class="line" style="width: 100%;height: 400px;"></div>
     <div id="line3" class="line" style="width: 100%;height: 400px;"></div>
+
   </div>
 </template>
 

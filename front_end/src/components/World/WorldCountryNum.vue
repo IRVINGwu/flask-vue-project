@@ -2,7 +2,7 @@
   <div class="countryNum">
 
 <!--  <h5 v-show="flag">抱歉,暂未获取到本地区当日疫情数据</h5>-->
-  <div class="data_country_daily" v-show="!flag">
+  <div class="data_country_daily">
     <van-grid :column-num="3" :gutter="6" class="vanGrid" :border="true">
       <van-grid-item icon="photo-o" text="文字" class="van-grid-item_1"><span>现有确诊</span><span
         class="number_1" v-cloak>{{ todayNum.today.confirm }}</span></van-grid-item>

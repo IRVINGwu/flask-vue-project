@@ -169,7 +169,7 @@ class Response:
         df = pd.read_csv('./static/data/province.csv')
         # print(name)
         if name == 'china':
-            path = './static/mapJson/' + name + '.json'
+            path = './static/mapJson/' + name + '1.json'
         elif name == '香港':
             path = './static/mapJson/xianggang.json'
         elif name == '台湾':
