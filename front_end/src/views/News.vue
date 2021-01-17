@@ -9,39 +9,66 @@
     </div>
 
     <!--    疫情新闻内容-->
+    <!--    <div class="news_content">-->
+    <!--      <h3>疫情追踪<span></span></h3>-->
+    <!--      &lt;!&ndash;      疫情列表&ndash;&gt;-->
+    <!--      <ul class="newslist">-->
+    <!--        <li v-for="(item,index) in newsContent" :key="item.id">-->
+    <!--          <div class="news_item">-->
+    <!--            <span>{{ item.time }}</span>-->
+    <!--            <div class="item_content">-->
+    <!--              <h4 class="title">{{ item.title }}</h4>-->
+    <!--              <div class="content">{{ item.content | formatContent }}...-->
+    <!--              </div>-->
+    <!--              &lt;!&ndash;              <span @click="getNewsItem(item.id)"></span>&ndash;&gt;-->
+    <!--              <router-link :to="'/news/' + item.id" tag="span">查看详情&gt;&gt;&gt;</router-link>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </li>-->
+    <!--      </ul>-->
+    <!--&lt;!&ndash;      当新闻拉取完之后,提示没有更多内容了&ndash;&gt;-->
+    <!--      <van-divider v-show="flag">上拉加载更多内容!</van-divider>-->
+    <!--      <van-divider v-show="!flag">没有更多内容了!</van-divider>-->
+    <!--    </div>-->
+
+    <!--    vant上拉加载组件-->
     <div class="news_content">
       <h3>疫情追踪<span></span></h3>
       <!--      疫情列表-->
-      <ul class="newslist">
-        <li v-for="(item,index) in newsContent" :key="item.id">
+      <van-list tag="ul" class="newsul" v-model="loading" :finished="finished" finished-text="没有更多内容了！" @load="onload">
+        <van-cell tag="li" class="newsli" v-for="(item,index) in newsContent" :key="index">
           <div class="news_item">
             <span>{{ item.time }}</span>
             <div class="item_content">
               <h4 class="title">{{ item.title }}</h4>
               <div class="content">{{ item.content | formatContent }}...
               </div>
-              <!--              <span @click="getNewsItem(item.id)"></span>-->
               <router-link :to="'/news/' + item.id" tag="span">查看详情&gt;&gt;&gt;</router-link>
             </div>
           </div>
-        </li>
-      </ul>
-<!--      当新闻拉取完之后,提示没有更多内容了-->
-      <van-divider v-if="flag">没有更多内容了!</van-divider>
+        </van-cell>
+      </van-list>
+      <!--      当新闻拉取完之后,提示没有更多内容了，此处是未使用vant的时候加的-->
+      <!--      <van-divider v-show="flag">上拉加载更多内容!</van-divider>-->
+      <!--      <van-divider v-show="!flag">没有更多内容了!</van-divider>-->
     </div>
   </div>
 </template>
 
 <script>
-import { Divider } from "vant"
+import {Divider, List} from 'vant'
 
 export default {
   data () {
     return {
       news: [],
       newsContent: [],
-      newsLen: 10,
-      flag:false,
+      // newsLen: 10,
+      newsLen: 0,
+      flag: true,
+      loading: false,
+      finished: false,
+      refreshing: false,
     }
   },
   methods: {
@@ -63,60 +90,93 @@ export default {
       // for (let i = 0; i < this.newsLen; i++) {
       //   this.newsContent.push(this.news[i])
       // }
-      this.newsContent = this.news.slice(0,this.newsLen)
+      //this.newsContent = this.news.slice(0,this.newsLen)
     },
     //实现上拉加载
     // 获取滚动条当前的位置
-    getScrollTop () {
-      let scrollTop = 0
-      if (document.documentElement && document.documentElement.scrollTop) {
-        scrollTop = document.documentElement.scrollTop
-      } else if (document.body) {
-        scrollTop = document.body.scrollTop
-      }
-      return scrollTop
-    },
-    // 获取当前可视范围的高度
-    getClientHeight () {
-      let clientHeight = 0
-      if (document.body.clientHeight && document.documentElement.clientHeight) {
-        clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight)
-      } else {
-        clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
-      }
-      return clientHeight
-    },
-    // 获取文档完整的高度
-    getScrollHeight () {
-      return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
-    },
-    // 滚动事件触发下拉加载
-    onScroll () {
-      if (this.getScrollHeight() - this.getClientHeight() - this.getScrollTop() <= 0) {
-        //如果请求次数大于5次,就不再请求,而是输出"没有更多内容了."
-        // console.log(this.news.length)
-        if(this.newsContent.length < this.news.length){
-          this.newsLen += 10
+    // getScrollTop () {
+    //   let scrollTop = 0
+    //   if (document.documentElement && document.documentElement.scrollTop) {
+    //     scrollTop = document.documentElement.scrollTop
+    //   } else if (document.body) {
+    //     scrollTop = document.body.scrollTop
+    //   }
+    //   return scrollTop
+    // },
+    // // 获取当前可视范围的高度
+    // getClientHeight () {
+    //   let clientHeight = 0
+    //   if (document.body.clientHeight && document.documentElement.clientHeight) {
+    //     clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight)
+    //   } else {
+    //     clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
+    //   }
+    //   return clientHeight
+    // },
+    // // 获取文档完整的高度
+    // getScrollHeight () {
+    //   return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+    // },
+    // // 滚动事件触发下拉加载
+    // onScroll () {
+    //   if (this.getScrollHeight() - this.getClientHeight() - this.getScrollTop() <= 0) {
+    //     //如果请求次数大于5次,就不再请求,而是输出"没有更多内容了."
+    //     // console.log(this.news.length)
+    //     if(this.newsContent.length < this.news.length){
+    //       this.newsLen += 10
+    //       this.newsContent = []
+    //       for (let i = 0; i < this.newsLen; i++) {
+    //         if(this.news[i] !== ''){
+    //           this.newsContent.push(this.news[i])
+    //         }
+    //       }
+    //     }else if(this.newsContent.length >= this.news.length){
+    //       // console.log('没有更多内容了!!!')
+    //       // this.$toast('没有更多内容了!!!')
+    //       console.log(this.newsContent.length)
+    //       console.log(this.news.length)
+    //       this.flag = false
+    //     }
+    //   }
+    // },
+    onload () {
+      setTimeout(() => {
+        if (this.refreshing) {
           this.newsContent = []
-          for (let i = 0; i < this.newsLen; i++) {
+          this.refreshing = false
+        }
+        this.newsLen += 10
+        this.newsContent = []
+        for (let i = 0; i < this.newsLen; i++) {
+          if (this.news[i] !== '') {
             this.newsContent.push(this.news[i])
           }
-        }else if(this.newsContent.length >= this.news.length){
-          // console.log('没有更多内容了!!!')
-          // this.$toast('没有更多内容了!!!')
-          this.flag = true
         }
-      }
+        this.loading = false
+        if (this.newsContent.length >= this.news.length) {
+          this.finished = true
+        }
+      }, 1000)
+    },
+    onRefresh () {
+      // 清空列表数据
+      this.finished = false
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.loading = true
+      this.onLoad()
     },
   },
   mounted () {
-    this.getNews();
-    this.$nextTick(function () {
-      window.addEventListener('scroll', this.onScroll)
-    })
+    this.getNews()
+    this.onload()
+    // this.$nextTick(function () {
+    //   window.addEventListener('scroll', this.onScroll)
+    // })
   },
   components: {
-    [Divider.name]:Divider,
+    [Divider.name]: Divider,
+    [List.name]: List,
   }
 }
 </script>
@@ -179,20 +239,22 @@ export default {
       }
     }
 
-    ul {
-      list-style: none;
+    .newsul {
+      //list-style: none;
       //padding-left: 10px;
-      li {
-        position: relative;
-        border-left: 1px solid #ddd;
-        width: 100%;
-        height: 188px;
-        padding-left: 15px;
+      .newsli {
+        //position: relative;
+        //border-left: 1px solid #ddd;
+        //width: 100%;
+        //height: 188px;
+        //padding-left: 15px;
 
         .news_item {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          padding: 0 0 30px 10px;
+          border-left: 1px solid #ddd;
 
           span {
             font-size: 16px;
@@ -208,6 +270,7 @@ export default {
             margin-top: 15px;
 
             h4 {
+              position: relative;
               font-size: 16px;
             }
 
@@ -225,7 +288,7 @@ export default {
         }
       }
 
-      li::before {
+      h4:before {
         content: ".";
         font-size: 0;
         line-height: 0;
@@ -234,8 +297,8 @@ export default {
         height: 3.3px;
         border: 5.6px solid #005dff;
         border-radius: 50%;
-        left: -5.7px;
-        top: 0;
+        left: -22.7px;
+        top: -38px;
         background-color: #fff;
       }
     }

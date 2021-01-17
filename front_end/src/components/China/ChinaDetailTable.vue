@@ -43,7 +43,7 @@ export default {
             let content = table[key].children
             for (let key1 in content) {
               // console.log(content[key1])
-              if(content[key1].today.confirm !== 0){
+              if(content[key1].today.confirm !== 0 && content[key1].name !== '待确认' && content[key1].name !== '地市待确认'){
                 const obj = {
                   todayConfirm: content[key1].today.confirm,
                   location: province,

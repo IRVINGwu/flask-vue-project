@@ -67,16 +67,19 @@ export default {
   },
   computed: {
     active () {//获取到路由的名字给active赋值
-      if(this.$route.name == 'Home' || this.$route.name == 'ChinaProvince'){
+      // if(this.$route.name == 'Home' || this.$route.name == 'ChinaProvince'){
+      if(this.$route.name.includes('Home') || this.$route.name.includes('ChinaProvince')){
         // console.log(this.$route.name)
         return 0
-      }else if(this.$route.name == 'World' || this.$route.name == 'WorldCountry'){
+      // }else if(this.$route.name == 'World' || this.$route.name == 'WorldCountry'){
+      }else if(this.$route.name.includes('World')){
         // console.log(this.$route.name)
         return 1
-      }else if(this.$route.name == 'News' || this.$route.name == 'NewsItem'){
+      // }else if(this.$route.name == 'News' || this.$route.name == 'NewsItem'){
+      }else if(this.$route.name.includes('News')){
         // console.log(this.$route.name)
         return 2
-      }else if(this.$route.name == 'Rumors'){
+      }else if(this.$route.name.includes('Rumors')){
         // console.log(this.$route.name)
         return 3
       }else{

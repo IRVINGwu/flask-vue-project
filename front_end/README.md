@@ -283,3 +283,59 @@ vant的懒加载只适用于图片的懒加载，我需要的是新闻内容的�
 ![image-20210113150853562](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20210113150853562.png)
 
 ![image-20210113150950267](https://img-typora-irving.oss-cn-shanghai.aliyuncs.com/img/image-20210113150950267.png)
+
+## 路由地址高亮的升级版本
+```js
+active () {//获取到路由的名字给active赋值
+      // if(this.$route.name == 'Home' || this.$route.name == 'ChinaProvince'){
+      if(this.$route.name.includes('Home') || this.$route.name.includes('ChinaProvince')){
+        // console.log(this.$route.name)
+        return 0
+      // }else if(this.$route.name == 'World' || this.$route.name == 'WorldCountry'){
+      }else if(this.$route.name.includes('World')){
+        // console.log(this.$route.name)
+        return 1
+      // }else if(this.$route.name == 'News' || this.$route.name == 'NewsItem'){
+      }else if(this.$route.name.includes('News')){
+        // console.log(this.$route.name)
+        return 2
+      }else if(this.$route.name.includes('Rumors')){
+        // console.log(this.$route.name)
+        return 3
+      }else{
+        console.log(this.$route.name)
+      }
+    }
+```
+我之前是使用 == 来判断地址，但是我发现我的路由很有规律，都包含某个单词，我只需要判断路由地址里面有没有这个单词即可，includes返回的结果是boolean类型，符合我的要求。
+
+
+## 使用vant的list组件来做新闻页面的上拉加载效果
+```vue
+<van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>
+  <van-cell v-for="item in list" :key="item" :title="item" />
+</van-list>
+```
+官方给出的模板是这样的，我原来以为van-cell是单标签，不能在里面放内容，但是今天一试，可以把它手动改成双标签，那么里面就可以放内容了。当然会报错，van-cell不是什么什么标签。
+改成的代码时这样的：
+```vue
+<van-list tag="ul" class="newsul" v-model="loading" :finished="finished" finished-text="没有更多内容了！" @load="onload">
+    <van-cell tag="li" class="newsli" v-for="(item,index) in newsContent" :key="index">
+      <div class="news_item">
+        <span>{{ item.time }}</span>
+        <div class="item_content">
+          <h4 class="title">{{ item.title }}</h4>
+          <div class="content">{{ item.content | formatContent }}...
+          </div>
+          <router-link :to="'/news/' + item.id" tag="span">查看详情&gt;&gt;&gt;</router-link>
+        </div>
+      </div>
+    </van-cell>
+</van-list>
+```
+通过onload时间来监听加载更多。改成这样之后，样式的设置反而更简单了。
