@@ -153,6 +153,8 @@ def toCsv(data):
     以后可以这样做，每天晚上爬取，判断时间是‘今天’的就存储，这样就能够排除一部分重复的内容。
     python有一个APScheduler定时任务模块，可以定时执行任务。
     '''
+    # df_news = pd.read_csv('../static/news/news_new.csv', encoding='utf-8')
+    # df_news.drop(['id'], axis=1, inplace=True)
     titles = [data[i]['title'] for i in range(len(data))]
     links = [data[i]['link'] for i in range(len(data))]
     times = [data[i]['time'] for i in range(len(data))]
@@ -173,11 +175,14 @@ def toCsv(data):
     df = df.sort_values(by='date', ascending=False)
 
     df['id'] = df.index
+    # df_new = pd.concat([df, df_news])
+    # df_new = df_new.sort_values(by='date', ascending=False)
+    # df_new['id'] = df_new.index
     df.to_csv(
         '../static/news/news_new.csv',
         encoding='utf-8',
         index=False
-        )
+    )
 
 
 if __name__ == '__main__':

@@ -13,8 +13,8 @@
 
     <!-- 两个按钮用于切换显示热力图 -->
     <div class="map_button">
-      <van-button plain type="primary" :class="['button_item',mapShow === true ? 'button_active': '']" @click="showDaily">现有确诊</van-button>
-      <van-button plain type="primary" :class="['button_item',mapShow === false ? 'button_active': '']" @click="showSum">累计确诊</van-button>
+      <van-button plain type="primary" :class="['button_item',mapShow === true ? 'button_active': '']" @click="showDaily">现有确诊数</van-button>
+      <van-button plain type="primary" :class="['button_item',mapShow === false ? 'button_active': '']" @click="showSum">累计确诊数</van-button>
     </div>
   </div>
 </template>
@@ -287,11 +287,11 @@ export default {
     width: 100%;
     height: 300px;
     overflow: hidden;
+    border: 1px solid #ccc;
 
     .china_map {
       width: 100%;
       height: 300px;
-      border: 1px solid #ccc;
     }
 
     .slide-enter {

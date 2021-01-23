@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import {Divider, List} from 'vant'
+import {Divider, List, Cell} from 'vant'
 
 export default {
   data () {
@@ -177,6 +177,7 @@ export default {
   components: {
     [Divider.name]: Divider,
     [List.name]: List,
+    [Cell.name]:Cell,
   }
 }
 </script>
@@ -240,21 +241,18 @@ export default {
     }
 
     .newsul {
-      //list-style: none;
-      //padding-left: 10px;
+      width: 100%;
+
       .newsli {
-        //position: relative;
-        //border-left: 1px solid #ddd;
-        //width: 100%;
-        //height: 188px;
-        //padding-left: 15px;
+        padding: 0;
 
         .news_item {
+          position: relative;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
-          padding: 0 0 30px 10px;
-          border-left: 1px solid #ddd;
+          padding: 15px 0 20px 0;
+          border-bottom: 2px solid #f3f3f3;
 
           span {
             font-size: 16px;
@@ -270,9 +268,22 @@ export default {
             margin-top: 15px;
 
             h4 {
-              position: relative;
               font-size: 16px;
             }
+
+            //h4::before {
+            //  content: "";
+            //  font-size: 0;
+            //  line-height: 0;
+            //  position: absolute;
+            //  width: 3.3px;
+            //  height: 3.3px;
+            //  border: 5.6px solid #005dff;
+            //  border-radius: 50%;
+            //  left: -5px;
+            //  top: 0;
+            //  background-color: #fff;
+            //}
 
             .content {
               margin: 0 0 5px 0;
@@ -288,19 +299,7 @@ export default {
         }
       }
 
-      h4:before {
-        content: ".";
-        font-size: 0;
-        line-height: 0;
-        position: absolute;
-        width: 3.3px;
-        height: 3.3px;
-        border: 5.6px solid #005dff;
-        border-radius: 50%;
-        left: -22.7px;
-        top: -38px;
-        background-color: #fff;
-      }
+
     }
   }
 }

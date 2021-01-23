@@ -1,6 +1,9 @@
-from flask import Flask
-from flask_cors import CORS
+from gevent import pywsgi, monkey
+monkey.patch_all()
+
 from toolspkg.response import Response
+from flask_cors import CORS
+from flask import Flask
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -125,8 +128,11 @@ def get_worldPredict(name):
 
 # 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
 if __name__ == '__main__':
-    app.run(
-        host='192.168.10.24',
-        port=8080,
-        debug=True
-    )
+    # app.run(
+    #     host='192.168.10.24',
+    #     port=8080,
+    #     debug=True
+    # )
+    # 使用gevent的服务器
+    server = pywsgi.WSGIServer(('192.168.10.24', 8080), app)
+    server.serve_forever()
