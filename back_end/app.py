@@ -134,5 +134,5 @@ if __name__ == '__main__':
     #     debug=True
     # )
     # 使用gevent的服务器
-    server = pywsgi.WSGIServer(('192.168.10.24', 8080), app)
+    server = pywsgi.WSGIServer(('192.168.1.2', 8080), app)
     server.serve_forever()
