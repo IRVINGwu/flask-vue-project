@@ -128,11 +128,6 @@ def get_worldPredict(name):
 
 # 因为有一些文件是数据处理的文件，需要在后端服务器已启动就执行，所以需要在此文件中引入，然后放到这里执行。
 if __name__ == '__main__':
-    # app.run(
-    #     host='192.168.10.24',
-    #     port=8080,
-    #     debug=True
-    # )
     # 使用gevent的服务器
-    server = pywsgi.WSGIServer(('192.168.1.2', 8080), app)
+    server = pywsgi.WSGIServer(('127.0.0.1', 8080), app)
     server.serve_forever()
