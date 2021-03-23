@@ -170,9 +170,6 @@ export default {
   mounted () {
     this.getNews()
     this.onload()
-    // this.$nextTick(function () {
-    //   window.addEventListener('scroll', this.onScroll)
-    // })
   },
   components: {
     [Divider.name]: Divider,
